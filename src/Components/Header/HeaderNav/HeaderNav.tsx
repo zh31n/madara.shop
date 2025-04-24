@@ -1,4 +1,3 @@
-import React from 'react';
 import s from "./HeaderNav.module.scss";
 import {NavLink} from "react-router-dom";
 import arrowDown from "../../../assets/img/arrowDown.svg";

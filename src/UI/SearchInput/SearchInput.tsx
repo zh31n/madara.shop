@@ -1,4 +1,3 @@
-import React from 'react';
 import s from './SearchInput.module.scss';
 import lupa from '../../assets/img/lupa.svg';
 
