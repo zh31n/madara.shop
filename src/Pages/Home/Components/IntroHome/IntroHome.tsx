@@ -7,7 +7,6 @@ import Madara from '../../../../assets/img/madara.png';
 
 const IntroHome: FC = () => {
     return (
-        <div className="container">
             <div className={s.container}>
                 <div className={s.info}>
                     <p className={s.text}>FIND CLOTHES<br/> THAT MATCHES<br/>YOUR STYLE</p>
@@ -30,7 +29,6 @@ const IntroHome: FC = () => {
                     <img src={Madara} height={660} alt={'madara'}/>
                 </div>
             </div>
-        </div>
     );
 };
 
