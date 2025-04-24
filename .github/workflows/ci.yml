@@ -10,6 +10,6 @@ jobs:
       - name: starting Node.js
         uses: actions/setup-node@v3
       - name: install modules
-        run: npm install
+        run: npm install --force
       - name: building project
         run: npm run build
