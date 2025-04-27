@@ -1,13 +1,15 @@
-import {FC} from "react";
 import IntroHome from "./Components/IntroHome/IntroHome.tsx";
-import NewArrivalsHome from "./Components/NewArrivalsHome/NewArrivalsHome.tsx";
+import HorizontalLine from "../../Components/HorizontalLine/HorizontalLine.tsx";
+import TitleProductsItems from "../../Components/TitleProductsItems/TitleProductsItems.tsx";
 
 
-const Home: FC = () => {
+const Home = () => {
     return (
         <section className={'container'}>
             <IntroHome/>
-            <NewArrivalsHome/>
+            <TitleProductsItems/>
+            <HorizontalLine/>
+            <TitleProductsItems title={'top selling'} />
         </section>
     );
 };
