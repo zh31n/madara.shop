@@ -1,6 +1,7 @@
 import IntroHome from "./Components/IntroHome/IntroHome.tsx";
 import HorizontalLine from "../../Components/HorizontalLine/HorizontalLine.tsx";
 import TitleProductsItems from "../../Components/TitleProductsItems/TitleProductsItems.tsx";
+import FeedbackItemsHome from "./Components/FeedbackItemsHome/FeedbackItemsHome.tsx";
 
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
             <TitleProductsItems/>
             <HorizontalLine/>
             <TitleProductsItems title={'top selling'} />
+            <FeedbackItemsHome/>
         </section>
     );
 };
