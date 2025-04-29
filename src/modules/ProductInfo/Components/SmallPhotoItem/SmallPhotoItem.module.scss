@@ -1,0 +1,14 @@
+.smallPhotoItem{
+  width: 152px;
+  height: 167px;
+  background: #F0EEED;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img{
+    width: 126px;
+    height: 122px;
+    object-fit: contain;
+  }
+}

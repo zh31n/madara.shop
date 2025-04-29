@@ -1,0 +1,26 @@
+.prPhoto{
+  display: flex;
+  height: 100%;
+  gap: 20px;
+  .photoLarge{
+    width: 444px;
+    height: 530px;
+    background: #F0EEED;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+      width: 376px;
+      height: 470px;
+      object-fit: contain;
+    }
+  }
+  .smallPhotos{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+  }
+
+}
