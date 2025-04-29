@@ -1,0 +1,36 @@
+.btn{
+  background: #F0F0F0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 18px ;
+  min-width: 86px;
+  min-height: 46px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border 1s;
+  border: 1px solid #F0F0F0;
+  &:hover{
+    transition: border 1s;
+    border-color: grey;
+  }
+}
+
+.activeBtn{
+  transition: border 1s;
+  background: black;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 18px ;
+  min-width: 86px;
+  min-height: 46px;
+  border-radius: 20px;
+  cursor: pointer;
+  line-height: 10px;
+  border: 1px solid black;
+  &:hover{
+    transition: border 1s;
+    border-color: white;
+  }
+}

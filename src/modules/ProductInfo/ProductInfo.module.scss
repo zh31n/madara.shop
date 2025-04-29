@@ -1,0 +1,43 @@
+.productInfo{
+  display: flex;
+  height: 530px;
+  margin-bottom: 2rem;
+  gap: 40px;
+}
+.info{
+  padding-top: 10px;
+  .title{
+    font-size: 40px;
+    text-transform: uppercase;
+    line-height: 35px;
+    height: 70px;
+    font-weight: 900;
+    margin-bottom: 1rem;
+  }
+  .prices{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    .price{
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .oldPrice{
+      text-decoration: line-through;
+      color: rgba(0, 0, 0, 0.3);
+      font-size: 32px;
+      font-weight: bold;
+      text-decoration-thickness: 2px;
+    }
+  }
+  .subtitle{
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .countAndAddCart{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+}

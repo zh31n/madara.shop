@@ -1,0 +1,14 @@
+.cont{
+  .title{
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 300;
+    line-height: 10px;
+  }
+  .btnSize{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+}

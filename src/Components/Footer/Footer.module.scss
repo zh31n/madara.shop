@@ -1,0 +1,11 @@
+
+.info {
+  margin-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .name{
+    color: rgba(0, 0, 0, 0.6);
+  }
+}

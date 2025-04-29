@@ -1,0 +1,14 @@
+.rating {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  span {
+    color: grey;
+  }
+
+  img {
+    margin-right: 5px;
+  }
+}
