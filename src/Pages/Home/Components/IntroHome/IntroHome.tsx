@@ -1,6 +1,6 @@
 import {FC} from "react";
 import s from './Intro.module.scss';
-import BlackButton from "../../../../Components/BlackButton/BlackButton.tsx";
+import BlackButton from "../../../../UI/BlackButton/BlackButton.tsx";
 import {Link} from "react-router-dom";
 import CountsInfo from "../CountsInfo/CountsInfo.tsx";
 import Madara from '../../../../assets/img/madara.png';

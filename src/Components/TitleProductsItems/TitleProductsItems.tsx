@@ -1,5 +1,5 @@
 import s from './TitleProductsItems.module.scss';
-import BlackButton from "../BlackButton/BlackButton.tsx";
+import BlackButton from "../../UI/BlackButton/BlackButton.tsx";
 import ProductItem from "../ProductItem/ProductItem.tsx";
 import {ITitleProductsItemsProps} from "./Types.ts";
 
