@@ -1,0 +1,32 @@
+.btnTabs {
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  transition: all .3s;
+  .btnActive {
+    color: rgba(0,0,0,1);
+    font-size: 20px;
+    width: 414px;
+    border-bottom: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s;
+  }
+  .btn {
+    color: rgba(0,0,0,0.5);
+    font-size: 20px;
+    width: 414px;
+    border-bottom: 2px solid black;
+    border-color: rgba(0,0,0,0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s;
+    cursor: pointer;
+  }
+  .btn:hover{
+    color: black;
+  }
+}

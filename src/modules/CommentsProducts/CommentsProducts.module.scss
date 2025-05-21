@@ -1,0 +1,38 @@
+.btnFilters{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .commentCount{
+    font-size: 24px;
+    font-weight: bold;
+    .count{
+      font-size: 16px;
+      color: rgba(0,0,0,0.5);
+      font-weight: 400;
+      margin-left: 0.3rem;
+    }
+  }
+  .filters{
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 10px;
+    .dropDown{
+      width: 120px;
+      height: 48px;
+      background: #F0F0F0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+      select{
+        background: none;
+        font-size: 16px;
+        font-weight: 500;
+        width: 90px;
+        option{
+
+        }
+      }
+    }
+  }
+}
