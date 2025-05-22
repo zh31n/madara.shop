@@ -36,3 +36,19 @@
     }
   }
 }
+.comments{
+  height: 100%;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .commentsContainer{
+    flex-wrap: wrap;
+    gap: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin-bottom: 2rem;
+  }
+}
