@@ -1,0 +1,26 @@
+.pageContainer{
+  display: flex;
+  justify-content: space-between;
+  .filtersNav{
+    height: 1220px;
+    width: 295px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 20px 20px;
+    .title{
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .categorieLink{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.54);
+    }
+  }
+}
