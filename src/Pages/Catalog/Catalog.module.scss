@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   .filtersNav{
-    height: 1220px;
+    height: 550px;
     width: 295px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 20px;
@@ -21,6 +21,14 @@
       justify-content: space-between;
       font-size: 16px;
       color: rgba(0, 0, 0, 0.54);
+    }
+    .sizeButtons{
+      flex-wrap: wrap;
+      margin-top: 1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1rem;
     }
   }
 }
