@@ -5,7 +5,7 @@ import arrowUp from "../../../../assets/img/arrow_up.svg";
 import SizeButton from "../SizeButton/SizeButton.tsx";
 import BlackButton from "../../../../UI/BlackButton/BlackButton.tsx";
 import CategorLink from "./components/categorLink/categorLink.tsx";
-import dollarImg from "../../../../assets/img/dollar.svg";
+import dollarImg from "../../../../assets/img/Dollar.svg";
 
 
 const Filters = () => {
