@@ -1,0 +1,63 @@
+.filtersNav{
+  height: 650px;
+  width: 295px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 20px 20px;
+  margin-bottom: 2rem;
+  .title{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sizeButtons{
+      flex-wrap: wrap;
+      margin-top: 1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1rem;
+  }
+  .priceFiltersCont{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    img{
+      width: 30px;
+      height: 30px;
+      margin-top: 1.8rem;
+    }
+  }
+  .priceFilter{
+    display: flex;
+    flex-direction: column;
+
+    label{
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    input{
+      border-radius: 8px;
+      width: 100px;
+      padding: 2px 8px;
+
+      border: 1px solid rgba(0, 0, 0, 0.6);
+    }
+  }
+}
