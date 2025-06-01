@@ -1,4 +1,32 @@
-.pageContainer{
+.pageContainer {
   display: flex;
   justify-content: space-between;
+
+  .itemsAndSort {
+    .sort {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 2rem;
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(0, 0, 0, 0.6);
+      select{
+        font-size: 16px;
+        color: black;
+        font-weight: 400;
+        padding-right: .5rem;
+      }
+    }
+
+    .items {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding-left: 2rem;
+      gap: 20px;
+      margin-bottom: 2rem;
+    }
+  }
 }
