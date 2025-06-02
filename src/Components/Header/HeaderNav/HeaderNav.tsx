@@ -6,7 +6,7 @@ import arrowDown from "../../../assets/img/arrowDown.svg";
 const HeaderNav = () => {
     return (
         <nav className={s.nav}>
-            <NavLink to={'/'} className={s.navItem}>
+            <NavLink to={'/catalog'} className={s.navItem}>
                 Shop
                 <img src={arrowDown} alt={'arrow down'}/>
             </NavLink>

@@ -14,7 +14,7 @@ const Header = () => {
                     <HeaderNav/>
                     <SearchInput/>
                     <section className={s.cartProfile}>
-                        <NavLink to={'/'}>
+                        <NavLink to={'/cart'}>
                             <img src={cartImg} alt="cart image"/>
                         </NavLink>
                         <NavLink to={'/'}>

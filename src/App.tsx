@@ -6,6 +6,7 @@ import Footer from "./Components/Footer/Footer.tsx";
 import SubscribeNews from "./modules/SubscribeNews/SubscribeNews.tsx";
 import ProductPage from "./Pages/ProductPage/ProductPage.tsx";
 import Catalog from "./Pages/Catalog/Catalog.tsx";
+import Cart from "./Pages/Cart/Cart.tsx";
 
 function App() {
 
@@ -13,9 +14,10 @@ function App() {
         <BrowserRouter>
             <Header/>
             <Routes>
-                <Route path={'/'} element={<Home/>} />
-                <Route path={'product/:id?'} element={<ProductPage/>} />
-                <Route path={'catalog/'} element={<Catalog/>} />
+                <Route path={'/'} element={<Home/>}/>
+                <Route path={'product/:id?'} element={<ProductPage/>}/>
+                <Route path={'catalog/'} element={<Catalog/>}/>
+                <Route path={'cart/'} element={<Cart/>}/>
             </Routes>
             <SubscribeNews/>
             <Footer/>
