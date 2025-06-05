@@ -18,5 +18,74 @@
     border: 1px solid rgba(0, 0, 0, 0.5);
     padding: 20px 24px;
   }
+
+  .infoCart {
+    width: 505px;
+    height: 458px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 20px 24px;
+
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+
+      text-transform: none;
+      line-height: 32px;
+      margin-bottom: 2rem;
+    }
+    .infoLine{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &:nth-child(3){
+        .price{
+          color: red;
+        }
+      }
+      .sub{
+        font-size: 20px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.5);
+      }
+      .price{
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+    .total{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      .sub{
+        font-size: 20px;
+        font-weight: 400;
+
+      }
+      .price{
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+    .promo{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      input{
+        width: 326px;
+        height: 48px;
+        background: #ece8e8;
+        border-radius: 20px;
+        padding-left: 2rem;
+        &::placeholder{
+          font-size: 16px;
+          font-weight: 400;
+          color: rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+  }
 }
 
