@@ -17,7 +17,7 @@ const Header = () => {
                         <NavLink to={'/cart'}>
                             <img src={cartImg} alt="cart image"/>
                         </NavLink>
-                        <NavLink to={'/'}>
+                        <NavLink to={'/profile'}>
                             <img src={profileImg} alt="profile image"/>
                         </NavLink>
                     </section>
