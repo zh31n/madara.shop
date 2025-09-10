@@ -1,10 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit'
 import mainPageReducer from "./Reducers/MainPageReducer.ts";
 import {useDispatch, useSelector} from "react-redux";
+import catalogPageReducer from "./Reducers/catalogPageReducer.ts";
 
 export const store = configureStore({
     reducer: {
-        mainPage: mainPageReducer
+        mainPage: mainPageReducer,
+        catalogPage: catalogPageReducer
     },
 })
 

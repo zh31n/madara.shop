@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getFeedbackThunk, getNewArrivalsThunk, getTopSallingThunk} from "../thunkCreators";
+import {getFeedbackThunk, getNewArrivalsThunk, getTopSallingThunk} from "../thunkCreators/homePage.ts";
 import {feedbackItemDbI, newArrivalsI} from "../../types/thunks.ts";
 
 
@@ -46,7 +46,6 @@ export const mainPageSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getNewArrivalsThunk.fulfilled, (state, action) => {
-
                 state.newArrivals.items = action.payload
             })
 

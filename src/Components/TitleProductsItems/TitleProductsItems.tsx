@@ -8,7 +8,7 @@ const TitleProductsItems = ({title,newArrivals}: ITitleProductsItemsProps) => {
 
 
     const itemsMap = newArrivals?.map(item => <ProductItem name={item.name} price={item.price} rating={item.rating}/>);
-    // console.log(newArrivals)
+
     return (
         <section className={s.arrivals}>
             <h1 className={s.title}>{title ?? 'NEW ARRIVALS'}</h1>

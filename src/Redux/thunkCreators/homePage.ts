@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {api} from "../../api";
+import {HomePageApi} from "../../api";
 
 
 export const getNewArrivalsThunk = createAsyncThunk(
@@ -7,7 +7,7 @@ export const getNewArrivalsThunk = createAsyncThunk(
     async () => {
 
         try {
-            return await api.getNewArrivals();
+            return await HomePageApi.getNewArrivals();
 
         } catch (error) {
 
@@ -21,16 +21,12 @@ export const getNewArrivalsThunk = createAsyncThunk(
 export const getTopSallingThunk = createAsyncThunk(
     'main/getTopSalling',
     async () => {
-
         try {
-            return await api.getTopSalling();
-
+            return await HomePageApi.getTopSalling();
         } catch (error) {
-
             console.error('Ошибка при запросе товаров:', error);
             throw error;
         }
-
     }
 );
 export const getFeedbackThunk = createAsyncThunk(
@@ -38,7 +34,7 @@ export const getFeedbackThunk = createAsyncThunk(
     async () => {
 
         try {
-            return await api.getFeedback();
+            return await HomePageApi.getFeedback();
 
         } catch (error) {
 

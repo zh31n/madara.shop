@@ -4,8 +4,8 @@ import TitleProductsItems from "../../Components/TitleProductsItems/TitleProduct
 import FeedbackItemsHome from "./Components/FeedbackItemsHome/FeedbackItemsHome.tsx";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
-import {newArrivalsI} from "../../types/thunks.ts";
-import {getNewArrivalsThunk, getTopSallingThunk} from "../../Redux/thunkCreators";
+import {feedbackItemDbI, newArrivalsI} from "../../types/thunks.ts";
+import {getFeedbackThunk, getNewArrivalsThunk, getTopSallingThunk} from "../../Redux/thunkCreators/homePage.ts";
 
 
 const Home = () => {
@@ -13,11 +13,13 @@ const Home = () => {
     const dispatch = useAppDispatch();
     const newArrivals: newArrivalsI[] = useAppSelector(state => state.mainPage.newArrivals.items);
     const topSalling:newArrivalsI[] = useAppSelector(state => state.mainPage.topSelling.items);
+    const feedback:feedbackItemDbI[] = useAppSelector(state => state.mainPage.feedback.items);
 
 
     useEffect(() => {
         dispatch(getNewArrivalsThunk());
         dispatch(getTopSallingThunk())
+        dispatch(getFeedbackThunk())
     }, [dispatch]);
 
     return (
@@ -26,7 +28,7 @@ const Home = () => {
             <TitleProductsItems newArrivals={newArrivals} />
             <HorizontalLine/>
             <TitleProductsItems title={'top selling'} newArrivals={topSalling}/>
-            <FeedbackItemsHome/>
+            <FeedbackItemsHome items={feedback}/>
         </section>
     );
 };

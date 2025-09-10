@@ -20,3 +20,18 @@ export interface feedbackItemDbI {
     text: string
     rating: number
 }
+
+interface sizeCatalogDbI{
+    id: string,
+    nameSize: string,
+}
+
+export interface catalogItemDbI {
+    id: string,
+    name: string,
+    photo: string,
+    price: number,
+    rating: number
+    size:sizeCatalogDbI[]
+
+}

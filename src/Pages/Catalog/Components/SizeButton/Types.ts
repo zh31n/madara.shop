@@ -3,4 +3,8 @@ export interface SizeButtonI {
     w?: number;
     h?: number;
     active?: boolean;
+    onClick?: (size: string) => {
+        payload: string;
+        type: "catalogPage/setCurrentSizeFilter";
+    };
 }

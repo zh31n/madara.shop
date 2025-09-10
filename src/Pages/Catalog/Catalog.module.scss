@@ -21,11 +21,13 @@
     }
 
     .items {
+      margin-left: 280px;
       display: flex;
+      width: 961px;
       justify-content: space-between;
       flex-wrap: wrap;
       padding-left: 2rem;
-      gap: 20px;
+      gap: 14px;
       margin-bottom: 2rem;
     }
   }
