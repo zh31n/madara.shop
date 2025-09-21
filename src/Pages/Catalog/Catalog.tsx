@@ -9,16 +9,17 @@ import {applyFilters, changeSortFilter, incrementPage} from "../../Redux/Reducer
 const Catalog = () => {
 
     const dispatch = useAppDispatch();
+    const catalogData = useAppSelector(state => state.catalogPage);
 
-    const catalog = useAppSelector(state => state.catalogPage.catalogItems);
-    const data = useAppSelector(state => state.catalogPage.filteredProducts);
-    const currentSortFilter = useAppSelector(state => state.catalogPage.sortBy);
-    const minPrice = useAppSelector(state => state.catalogPage.minPriceFilter);
-    const maxPrice = useAppSelector(state => state.catalogPage.maxPriceFilter);
-    const sizeFilter = useAppSelector(state => state.catalogPage.sizeFilter);
-    const page = useAppSelector(state => state.catalogPage.page);
-    const pageSize = useAppSelector(state => state.catalogPage.pageSize);
-    const count = useAppSelector(state => state.catalogPage.count);
+    const catalog = catalogData.catalogItems
+    const data = catalogData.filteredProducts
+    const currentSortFilter = catalogData.sortBy
+    const minPrice = catalogData.minPriceFilter
+    const maxPrice = catalogData.maxPriceFilter;
+    const sizeFilter = catalogData.sizeFilter;
+    const page = catalogData.page;
+    const pageSize = catalogData.pageSize;
+    const count = catalogData.count;
     const pageCount = Math.ceil(count / pageSize);
 
     useEffect(() => {
@@ -41,7 +42,7 @@ const Catalog = () => {
     };
 
 
-    const catalogItemsMap = data.map(i => <ProductItem name={i.name} price={i.price} rating={i.rating}/>)
+    const catalogItemsMap = data.map(i => <ProductItem id={i.id} name={i.name} price={i.price} rating={i.rating}/>)
 
     const options = [
         {value: 'Most Popular'},

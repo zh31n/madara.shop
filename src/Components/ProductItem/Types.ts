@@ -5,4 +5,5 @@ export interface ProductItemProps {
     rating: number,
     oldPrice?: number,
     discount?: number,
+    id: string,
 }
