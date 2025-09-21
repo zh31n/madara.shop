@@ -12,7 +12,8 @@ interface state {
     maxPriceFilter: string,
     count: number,
     page: number,
-    hasMore: boolean
+    hasMore: boolean,
+    pageSize: number,
 }
 
 const initialState: state = {
@@ -20,39 +21,27 @@ const initialState: state = {
     filteredProducts: [], // Продукты после фильтрации
     sortBy: 'Max price',     // Текущий критерий сортировки
     sizeFilter: '',          // Текущий фильтр по размеру
-    minPriceFilter: '10',
+    minPriceFilter: '0',
     maxPriceFilter: '99999',
     count: 0,
     page: 1,
     hasMore: true,
+    pageSize: 9
 }
 
 const catalogPageSlice = createSlice({
     name: 'catalogPage',
     initialState,
     reducers: {
-        setCurrentSizeFilter: (state, action: PayloadAction<string>) => {
-            state.sizeFilter = action.payload;
-            state.page = 1;
-        },
-        setMinPriceFilter: (state, action: PayloadAction<string>) => {
-            state.minPriceFilter = action.payload;
-            state.page = 1;
+        setCurrentSizeFilter: (state, action: PayloadAction<string>) => {state.sizeFilter = action.payload;},
 
-        },
-        setMaxPriceFilter: (state, action: PayloadAction<string>) => {
-            state.maxPriceFilter = action.payload;
-            state.page = 1;
+        setMinPriceFilter: (state, action: PayloadAction<string>) => {state.minPriceFilter = action.payload;},
 
-        },
-        changeSortFilter: (state, action: PayloadAction<string>) => {
-            state.sortBy = action.payload;
-            state.page = 1;
+        setMaxPriceFilter: (state, action: PayloadAction<string>) => {state.maxPriceFilter = action.payload;},
 
-        },
-        incrementPage: (state) => {
-            state.page += 1;
-        },
+        changeSortFilter: (state, action: PayloadAction<string>) => {state.sortBy = action.payload;},
+
+        incrementPage: (state) => {state.page += 1;},
         applyFilters: (state) => {
             // 1. Фильтрация по размеру и цене
             let filtered = state.catalogItems.filter(product => {
@@ -61,15 +50,18 @@ const catalogPageSlice = createSlice({
                 return sizeMatch && priceMatch;
             });
 
-            // 2. Сортировка
             switch (state.sortBy) {
+
                 case 'Min price':
-                    filtered.sort((a, b) => a.price - b.price);
+                    console.log("state.sortBy:", state.sortBy)
+                    filtered.sort((a, b) => a.price - b.price); // Сортировка по возрастанию (правильно)
                     break;
                 case 'Max price':
-                    filtered.sort((a, b) => b.price - a.price);
+                    console.log("state.sortBy:", state.sortBy)
+                    filtered.sort((a, b) => b.price - a.price); // Сортировка по убыванию (правильно)
                     break;
                 case 'Rating':
+                    console.log("state.sortBy:", state.sortBy)
                     filtered.sort((a, b) => b.rating - a.rating);
                     break;
                 default:
@@ -83,7 +75,7 @@ const catalogPageSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getCatalogItemsThunk.fulfilled, (state, action) => {
-                state.catalogItems = state.catalogItems.concat(action.payload.items); // Добавляем продукты к существующим
+                state.catalogItems = [...state.catalogItems, ...action.payload.items];
                 state.count = action.payload.count;
                 state.filteredProducts = []; // Очищаем отфильтрованные данные, чтобы применить фильтры к новым данным
             })

@@ -19,16 +19,43 @@
         padding-right: .5rem;
       }
     }
-
+    .list{
+      height: 100%;
+      width: 100%;
+      margin-right: auto;
+      margin-left: auto;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+      margin-bottom: 5rem;
+    }
     .items {
       margin-left: 280px;
       display: flex;
       width: 961px;
-      justify-content: space-between;
       flex-wrap: wrap;
       padding-left: 2rem;
       gap: 14px;
       margin-bottom: 2rem;
+    }
+    .textOver{
+      margin-right: auto;
+      margin-left: auto;
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .btnMore{
+      width: 100px;
+      height: 40px;
+      background: black;
+      color: white;
+      margin-bottom: 2rem;
+      font-family: 'Montserrat',sans-serif;
+      margin-right: auto;
+      margin-left: auto;
+      border-radius: 15px;
+      cursor: pointer;
     }
   }
 }

@@ -3,7 +3,7 @@ import filterImg from "../../../../assets/img/filters.svg";
 import HorizontalLine from "../../../../UI/HorizontalLine/HorizontalLine.tsx";
 import arrowUp from "../../../../assets/img/arrow_up.svg";
 import SizeButton from "../SizeButton/SizeButton.tsx";
-import BlackButton from "../../../../UI/BlackButton/BlackButton.tsx";
+// import BlackButton from "../../../../UI/BlackButton/BlackButton.tsx";
 import dollarImg from "../../../../assets/img/Dollar.svg";
 import {useAppDispatch, useAppSelector} from "../../../../Redux/store.ts";
 import {
@@ -78,7 +78,7 @@ const Filters = () => {
                 </div>
                 <div className={s.sizeButtons}>{sizesMap}</div>
             </div>
-            <BlackButton text={'Apply Filters'} width={247}/>
+            {/*<BlackButton text={'Apply Filters'} width={247}/>*/}
         </div>
     );
 };

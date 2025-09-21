@@ -16,44 +16,41 @@ const Catalog = () => {
     const minPrice = useAppSelector(state => state.catalogPage.minPriceFilter);
     const maxPrice = useAppSelector(state => state.catalogPage.maxPriceFilter);
     const sizeFilter = useAppSelector(state => state.catalogPage.sizeFilter);
-    const hasMore = useAppSelector(state => state.catalogPage.hasMore);
     const page = useAppSelector(state => state.catalogPage.page);
+    const pageSize = useAppSelector(state => state.catalogPage.pageSize);
+    const count = useAppSelector(state => state.catalogPage.count);
+    const pageCount = Math.ceil(count / pageSize);
 
     useEffect(() => {
-        dispatch(getCatalogItemsThunk(page))
-    }, [dispatch,page]);
+        dispatch(getCatalogItemsThunk(1))
+    }, []);
+
+    useEffect(() => {
+        if (page > 1) {
+            dispatch(getCatalogItemsThunk(page));
+        }
+    }, [page]);
 
     useEffect(() => {
         dispatch(applyFilters())
-    }, [currentSortFilter,minPrice,maxPrice,sizeFilter,dispatch,catalog]);
+    }, [currentSortFilter, minPrice, maxPrice, sizeFilter, catalog,page]);
 
-    useEffect(() => {
-        dispatch(getCatalogItemsThunk(page));
+    const handleClickMore = () => {
         dispatch(incrementPage())
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || !hasMore) {
-            return;
-        }
-        getCatalogItemsThunk(page)
+        dispatch(getCatalogItemsThunk(page))
     };
-
-
 
 
     const catalogItemsMap = data.map(i => <ProductItem name={i.name} price={i.price} rating={i.rating}/>)
 
     const options = [
-        {value:'Most Popular'},
-        {value:'Rating'},
-        {value:'Min Price'},
-        {value:'Max price'},
+        {value: 'Most Popular'},
+        {value: 'Rating'},
+        {value: 'Min price'},
+        {value: 'Max price'},
     ];
 
-    const hadleOption = (name:string) => dispatch(changeSortFilter(name))
+    const handleOption = (name: string) => dispatch(changeSortFilter(name))
 
     const optMap = options.map(o => <option value={o.value}>{o.value}</option>)
 
@@ -64,11 +61,18 @@ const Catalog = () => {
                 <div className={s.itemsAndSort}>
                     <div className={s.sort}>
                         Sort by:
-                        <select onChange={(e) => hadleOption(e.target.value) } value={currentSortFilter}>
+                        <select onChange={(e) => handleOption(e.target.value)} value={currentSortFilter}>
                             {optMap}
                         </select>
                     </div>
-                    <div className={s.items}>{!catalogItemsMap.length ? 'loading' : catalogItemsMap}</div>
+                    <div className={s.list}>
+                        <div className={s.items}>{!catalogItemsMap.length ? 'loading' : catalogItemsMap}</div>
+                        {page > pageCount
+                            ? <p className={s.textOver}>Данных для загрузки нет</p>
+                            : <button onClick={handleClickMore} className={s.btnMore}>Add More</button>
+                        }
+
+                    </div>
                 </div>
             </div>
         </div>
