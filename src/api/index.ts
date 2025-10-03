@@ -32,3 +32,11 @@ export const CatalogPageApi = {
         })
     }
 }
+
+export const ProductPageApi = {
+    async getProductData(id:string){
+        return await instance.get(`products/${id}`).then(res => {
+            return res.data;
+        })
+    }
+}

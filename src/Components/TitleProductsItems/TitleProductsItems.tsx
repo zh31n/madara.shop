@@ -6,8 +6,9 @@ import {ITitleProductsItemsProps} from "./Types.ts";
 
 const TitleProductsItems = ({title,newArrivals}: ITitleProductsItemsProps) => {
 
+     const baseUrlPhoto = 'http://localhost:3003'
 
-    const itemsMap = newArrivals?.map(item => <ProductItem id={item.id} name={item.name} price={item.price} rating={item.rating}/>);
+    const itemsMap = newArrivals?.map(item => <ProductItem id={item.id} name={item.name} image={baseUrlPhoto + item.photo } price={item.price} rating={item.rating}/>);
 
     return (
         <section className={s.arrivals}>

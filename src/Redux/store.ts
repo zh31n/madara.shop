@@ -2,11 +2,13 @@ import {configureStore} from '@reduxjs/toolkit'
 import mainPageReducer from "./Reducers/MainPageReducer.ts";
 import {useDispatch, useSelector} from "react-redux";
 import catalogPageReducer from "./Reducers/catalogPageReducer.ts";
+import productPageReducer from "./Reducers/productPageReducer.ts";
 
 export const store = configureStore({
     reducer: {
         mainPage: mainPageReducer,
-        catalogPage: catalogPageReducer
+        catalogPage: catalogPageReducer,
+        productPage: productPageReducer,
     },
 })
 

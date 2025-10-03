@@ -10,7 +10,7 @@ const Catalog = () => {
 
     const dispatch = useAppDispatch();
     const catalogData = useAppSelector(state => state.catalogPage);
-
+    const baseUrlPhoto = 'http://localhost:3003';
     const catalog = catalogData.catalogItems
     const data = catalogData.filteredProducts
     const currentSortFilter = catalogData.sortBy
@@ -42,7 +42,7 @@ const Catalog = () => {
     };
 
 
-    const catalogItemsMap = data.map(i => <ProductItem id={i.id} name={i.name} price={i.price} rating={i.rating}/>)
+    const catalogItemsMap = data.map(i => <ProductItem id={i.id} name={i.name} image={baseUrlPhoto + i.photo} price={i.price} rating={i.rating}/>)
 
     const options = [
         {value: 'Most Popular'},
