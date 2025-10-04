@@ -75,9 +75,21 @@ const catalogPageSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getCatalogItemsThunk.fulfilled, (state, action) => {
-                state.catalogItems = [...state.catalogItems, ...action.payload.items];
-                state.count = action.payload.count;
-                state.filteredProducts = []; // Очищаем отфильтрованные данные, чтобы применить фильтры к новым данным
+
+                const newItems:catalogItemDbI[] = action.payload.items;
+                
+                if (newItems && newItems.length > 0) {
+                    const existingIds = new Set(state.catalogItems.map(item => item.id));
+
+                    const uniqueNewItems = newItems.filter(item => !existingIds.has(item.id));
+
+                    // Добавляем только уникальные
+                    state.catalogItems = [...state.catalogItems, ...uniqueNewItems];
+                    state.count = action.payload.count;
+                }
+                // state.catalogItems = [...state.catalogItems, ...action.payload.items];
+                // state.count = action.payload.count;
+                // state.filteredProducts = [];
             })
     }
 })

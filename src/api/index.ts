@@ -38,5 +38,10 @@ export const ProductPageApi = {
         return await instance.get(`products/${id}`).then(res => {
             return res.data;
         })
-    }
+    },
+    async getAlsoLike() {
+        return await  instance.get<newArrivalsI[]>('products/random').then(res => {
+            return res.data;
+        })
+    },
 }

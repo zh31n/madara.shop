@@ -12,6 +12,7 @@ export interface newArrivalsI{
     price: number,
     discard: boolean
     rating: number
+    oldPrice?: number
 }
 
 export interface feedbackItemDbI {
@@ -33,5 +34,5 @@ export interface catalogItemDbI {
     price: number,
     rating: number
     size:sizeCatalogDbI[]
-
+    oldPrice?: number
 }

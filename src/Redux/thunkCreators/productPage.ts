@@ -17,3 +17,10 @@ export const getProductDataThunk = createAsyncThunk(
 
     }
 );
+
+export const getAlsoLikeThunk = createAsyncThunk(
+    'product/getAlsoLike',
+    async () => {
+        return await ProductPageApi.getAlsoLike();
+    }
+)

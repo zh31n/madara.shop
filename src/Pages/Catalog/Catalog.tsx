@@ -42,7 +42,8 @@ const Catalog = () => {
     };
 
 
-    const catalogItemsMap = data.map(i => <ProductItem id={i.id} name={i.name} image={baseUrlPhoto + i.photo} price={i.price} rating={i.rating}/>)
+    const catalogItemsMap = data.map(i => <ProductItem id={i.id} key={i.id} name={i.name}
+                                                       image={baseUrlPhoto + i.photo} oldPrice={i.oldPrice} price={i.price} rating={i.rating}/>)
 
     const options = [
         {value: 'Most Popular'},

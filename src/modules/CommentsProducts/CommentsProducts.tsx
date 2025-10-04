@@ -1,37 +1,41 @@
-import s from './CommentsProducts.module.scss';
 import BtnsTabs from "./Components/BtnsTabs/BtnsTabs.tsx";
-import BlackButton from "../../UI/BlackButton/BlackButton.tsx";
 import CommentProductItem from "../../Pages/ProductPage/components/CommentProductItem/CommentProductItem.tsx";
+import {stateReviewsI} from "../../Redux/Reducers/productPageReducer.ts";
+import Accordeon from "../../UI/Accordeon/Accordeon.tsx";
+import s from './CommentsProducts.module.scss'
+import BlackButton from "../../UI/BlackButton/BlackButton.tsx";
+import {useAppSelector} from "../../Redux/store.ts";
 
 
-const CommentsProducts = () => {
+const CommentsProducts = ({reviews}: { reviews: stateReviewsI[] }) => {
+
+    const commentsProductMap = reviews.map(r => <CommentProductItem rating={r.rating}
+                                                                    name={r.name} text={r.text} key={r.id}/>);
+    const currentTab = useAppSelector(state => state.productPage.currentTab)
+
+
     return (
         <div className={'container'}>
             <BtnsTabs/>
-            <div className={s.btnFilters}>
-                <div className={s.commentCount}>
-                    All Reviews
-                    <span className={s.count}>(74)</span>
-                </div>
-                <div className={s.filters}>
-                    <div className={s.dropDown}>
-                        <select>
-                            <option>Latest</option>
-                            <option>Oldest</option>
-                        </select>
+            { currentTab === 1 && <div>
+                <div className={s.btnFilters}>
+                    <div className={s.commentCount}>All Reviews<span className={s.count}>({reviews.length})</span></div>
+                    <div className={s.filters}>
+                        <div className={s.dropDown}>
+                            <select>
+                                <option>Latest</option>
+                                <option>Oldest</option>
+                            </select>
+                        </div>
+                        <BlackButton text={'Write a Review'} width={166} height={48}/>
                     </div>
-                    <BlackButton text={'Write a Review'} width={166} height={48}/>
                 </div>
-            </div>
-            <div className={s.comments}>
-                <div className={s.commentsContainer}>
-                    <CommentProductItem name={'Ethan R.'} rating={4} text={"This t-shirt is a must-have for anyone who appreciates good design. The minimalistic yet stylish pattern caught my eye, and the fit is perfect. I can see the designer's touch in every aspect of this shirt."} />
-                    <CommentProductItem name={'Ethan R.'} rating={4} text={"This t-shirt is a must-have for anyone who appreciates good design. The minimalistic yet stylish pattern caught my eye, and the fit is perfect. I can see the designer's touch in every aspect of this shirt."} />
-                    <CommentProductItem name={'Ethan R.'} rating={4} text={"This t-shirt is a must-have for anyone who appreciates good design. The minimalistic yet stylish pattern caught my eye, and the fit is perfect. I can see the designer's touch in every aspect of this shirt."} />
-                    <CommentProductItem name={'Ethan R.'} rating={4} text={"This t-shirt is a must-have for anyone who appreciates good design. The minimalistic yet stylish pattern caught my eye, and the fit is perfect. I can see the designer's touch in every aspect of this shirt."} />
+                <div className={s.comments}>
+                    <div className={s.commentsContainer}>{commentsProductMap}</div>
+                    {reviews.length < 4 ? '' : <BlackButton text={'Load more'}/>}
                 </div>
-                <BlackButton text={'Load more'}/>
-            </div>
+            </div>}
+            {currentTab === 2 && <Accordeon/>}
         </div>
     );
 };
