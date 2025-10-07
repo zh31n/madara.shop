@@ -3,12 +3,14 @@ import mainPageReducer from "./Reducers/MainPageReducer.ts";
 import {useDispatch, useSelector} from "react-redux";
 import catalogPageReducer from "./Reducers/catalogPageReducer.ts";
 import productPageReducer from "./Reducers/productPageReducer.ts";
+import authReducer from "./Reducers/authReducer.ts";
 
 export const store = configureStore({
     reducer: {
         mainPage: mainPageReducer,
         catalogPage: catalogPageReducer,
         productPage: productPageReducer,
+        auth: authReducer,
     },
 })
 

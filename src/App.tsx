@@ -8,6 +8,8 @@ import ProductPage from "./Pages/ProductPage/ProductPage.tsx";
 import Catalog from "./Pages/Catalog/Catalog.tsx";
 import Cart from "./Pages/Cart/Cart.tsx";
 import Profile from "./Pages/Profile/Profile.tsx";
+import LoginPage from "./Pages/LoginPage/LoginPage.tsx";
+import RegisterPage from "./Pages/RegisterPage/RegisterPage.tsx";
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
                 <Route path={'catalog/'} element={<Catalog/>}/>
                 <Route path={'cart/'} element={<Cart/>}/>
                 <Route path={'profile/'} element={<Profile/>}/>
+                <Route path={'login/'} element={<LoginPage/>}/>
+                <Route path={'register/'} element={<RegisterPage/>}/>
             </Routes>
             <SubscribeNews/>
             <Footer/>
