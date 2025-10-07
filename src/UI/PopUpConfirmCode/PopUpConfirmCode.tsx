@@ -12,7 +12,7 @@ import styles from './PopUpConfirmCode.module.scss';
 interface IProps {
     isOpen: boolean,
     onClose:() => boolean,
-    onSubmit:(code) => void
+    onSubmit:(code:any) => void
 }
 
 function PopUpConfirmCode({ isOpen, onClose, onSubmit }:IProps) {
