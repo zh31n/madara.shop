@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import styles from './PopUpConfirmCode.module.scss';
+import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
+import {setConfirmCode} from "../../Redux/Reducers/authReducer.ts";
 
 /**
  * Компонент всплывающего окна для ввода кода верификации.
@@ -11,40 +13,50 @@ import styles from './PopUpConfirmCode.module.scss';
 
 interface IProps {
     isOpen: boolean,
-    onClose:() => boolean,
-    onSubmit:(code:any) => void
+    onClose?: () => boolean,
+    onSubmitCode: () => void,
+    onResend: () => void,
 }
 
-function PopUpConfirmCode({ isOpen, onClose, onSubmit }:IProps) {
-    const [code, setCode] = useState('');
+function PopUpConfirmCode({isOpen, onSubmitCode,onResend}: IProps) {
+
+    const dispatch = useAppDispatch();
+
+    const code = useAppSelector(state => state.auth.confirmCode);
+    const [timer, setTimer] = useState(60);
+    const [isResendDisabled, setIsResendDisabled] = useState(true);
+
+
     // Состояние для управления тем, активна ли анимация появления/исчезновения
     const [isAnimating, setIsAnimating] = useState(false);
 
     // Эффект для управления анимацией появления/исчезновения
     useEffect(() => {
         if (isOpen) {
-            // Если открываем, устанавливаем видимое состояние и позволяем анимации fadeIn отработать
             setIsAnimating(true);
+            setTimer(0); // Reset timer when popup opens
+            setIsResendDisabled(true);
         }
     }, [isOpen]);
 
-    const handleOverlayClick = (e:any) => {
-        // Закрываем только если клик был на сам Overlay, а не на содержимое PopupContainer
-        if (e.target.classList.contains(styles.overlay)) {
-            // Начинаем анимацию fadeOut
-            setIsAnimating(false);
-            // Ждем завершения анимации перед полным удалением из DOM
-            const timer = setTimeout(onClose, 200); // 200ms соответствует длительности анимации в CSS
-            return () => clearTimeout(timer);
+    useEffect(() => {
+        let intervalId:any;
+        if (timer > 0 && isOpen) {
+            intervalId = setInterval(() => {
+                setTimer((prevTimer) => prevTimer - 1);
+            }, 1000);
+        } else if (timer === 0) {
+            setIsResendDisabled(false); // Enable resend button
         }
-    };
+
+        return () => clearInterval(intervalId); // Clear interval on unmount/update
+    }, [timer, isOpen]);
+
+
 
     const handleSubmit = () => {
-        onSubmit(code);
-        // Начинаем анимацию fadeOut перед закрытием
+        onSubmitCode();
         setIsAnimating(false);
-        const timer = setTimeout(onClose, 200);
-        return () => clearTimeout(timer);
     };
 
     // Если isOpen false И мы не в процессе анимации (т.е. уже скрыли), не рендерим ничего
@@ -55,10 +67,15 @@ function PopUpConfirmCode({ isOpen, onClose, onSubmit }:IProps) {
     // Классы: base class + animation class
     const overlayClasses = `${styles.overlay} ${isAnimating ? '' : styles.hidden}`;
 
+    const handleResendClick = () => {
+        onResend(); // Call the resend code function
+        setTimer(0); // Reset timer
+        setIsResendDisabled(true);
+    };
+
     return (
         <div
             className={overlayClasses}
-            onClick={handleOverlayClick}
             // Принудительно устанавливаем класс fadeOut, когда isAnimating становится false
             // (Это нужно для React, чтобы он знал, какую анимацию применить)
         >
@@ -73,11 +90,18 @@ function PopUpConfirmCode({ isOpen, onClose, onSubmit }:IProps) {
                     type="text"
                     placeholder="Введите код"
                     value={code}
-                    onChange={(e) => setCode(e.target.value)}
+                    onChange={(e) => dispatch(setConfirmCode(e.target.value))}
                 />
                 <button className={styles.button} onClick={handleSubmit}>
                     Подтвердить
                 </button>
+                <p style={{marginTop: '10px',textAlign:'center'}}>
+                    {isResendDisabled ? (
+                        `Повторная отправка через ${timer} секунд`
+                    ) : (
+                        <button onClick={handleResendClick}>Отправить код повторно</button>
+                    )}
+                </p>
             </div>
         </div>
     );

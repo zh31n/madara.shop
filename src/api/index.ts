@@ -10,9 +10,9 @@ const instance = axios.create({
 
 export const HomePageApi = {
     async getNewArrivals() {
-       return await  instance.get<newArrivalsI[]>('products/random').then(res => {
-           return res.data;
-       })
+        return await instance.get<newArrivalsI[]>('products/random').then(res => {
+            return res.data;
+        })
     },
     async getTopSalling() {
         return await instance.get<newArrivalsI>('products/random').then(res => {
@@ -35,13 +35,13 @@ export const CatalogPageApi = {
 }
 
 export const ProductPageApi = {
-    async getProductData(id:string){
+    async getProductData(id: string) {
         return await instance.get(`products/${id}`).then(res => {
             return res.data;
         })
     },
     async getAlsoLike() {
-        return await  instance.get<newArrivalsI[]>('products/random').then(res => {
+        return await instance.get<newArrivalsI[]>('products/random').then(res => {
             return res.data;
         })
     },
@@ -49,13 +49,23 @@ export const ProductPageApi = {
 
 
 export const AuthorizationApi = {
-    async login(email:string, password:string) {
-        return await instance.post<LoginI>(`login`, {email, password}).then(res => {
+    async login(email: string, password: string) {
+        return await instance.post<LoginI>(`auth/login`, {loginorEmail:email, password}).then(res => {
             return res.data;
         })
     },
-    async register(email:string, password:string,login:string) {
-        return await instance.post(`auth/register`, {email, password,login}).then(res => {
+    async register(email: string, password: string, login: string) {
+        return await instance.post(`auth/register`, {email, password, login}).then(res => {
+            return res.data;
+        })
+    },
+    async verifyEmail(code: string) {
+        return await instance.post(`auth/verify`, {token: code}).then(res => {
+            return res.data;
+        })
+    },
+    async resendEmail(email: string) {
+        return await instance.post(`auth/resend-email`, {email: email}).then(res => {
             return res.data;
         })
     }

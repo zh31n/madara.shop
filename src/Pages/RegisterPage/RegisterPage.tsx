@@ -1,8 +1,12 @@
 import s from './RegisterPage.module.scss';
 import BlackButton from "../../UI/BlackButton/BlackButton.tsx";
 import {useForm} from "react-hook-form";
-import {useAppDispatch} from "../../Redux/store.ts";
-import {registerThunk} from "../../Redux/thunkCreators/authorization.ts";
+import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
+import {registerThunk, resendEmailThunk, verifyEmailThunk} from "../../Redux/thunkCreators/authorization.ts";
+import PopUpConfirmCode from "../../UI/PopUpConfirmCode/PopUpConfirmCode.tsx";
+import {setEmail} from "../../Redux/Reducers/authReducer.ts";
+import {useNavigate} from "react-router-dom";
+import {FC} from "react";
 
 interface LoginFormValues {
     email: string;
@@ -11,9 +15,16 @@ interface LoginFormValues {
 }
 
 
-const RegisterPage = () => {
+const RegisterPage:FC = () => {
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const isRegistered = useAppSelector(state => state.auth.isRegistered);
+    const currentEmail = useAppSelector(state => state.auth.email);
+    const confirmCode = useAppSelector(state => state.auth.confirmCode);
+    const isConfirmed = useAppSelector(state => state.auth.isConfirmed);
+
+    const handleCodeSubmit = () => dispatch(verifyEmailThunk({code: confirmCode}));
 
     const {
         register,
@@ -28,8 +39,16 @@ const RegisterPage = () => {
         }// Валидация при потере фокуса
     });
 
-    const onSubmit = (data: LoginFormValues) => {
+    const onSubmit = (data: LoginFormValues,e:any) => {
+        e.preventDefault();
         dispatch(registerThunk({email: data.email, password: data.password, login: data.login}));
+        dispatch(setEmail(data.email));
+    }
+
+    const onResend = () => dispatch(resendEmailThunk({email: currentEmail!}))
+
+    if(isConfirmed){
+        navigate('/login');
     }
 
     return (
@@ -84,8 +103,8 @@ const RegisterPage = () => {
                     )}
                 </div>
                 <BlackButton text={'register'}/>
+                <PopUpConfirmCode isOpen={isRegistered} onResend={onResend} onSubmitCode={handleCodeSubmit}/>
             </form>
-
         </div>
     );
 };

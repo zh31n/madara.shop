@@ -8,7 +8,7 @@ interface outPutLoginI{
 }
 
 export interface LoginI{
-    access_token:string
+    token:string
     userData:{
         email:string,
         login:string,
@@ -20,6 +20,14 @@ export interface RegisterI{
     password:string
     email:string
     login:string
+}
+
+export interface verifyEmailI {
+    code:string
+}
+
+export interface resendEmailI {
+    email:string
 }
 
 export const loginThunk = createAsyncThunk<LoginI,outPutLoginI>(
@@ -49,3 +57,31 @@ export const registerThunk = createAsyncThunk<any,RegisterI>(
         }
     }
 )
+
+export const verifyEmailThunk = createAsyncThunk<any,verifyEmailI>(
+    'login/verifyEmailThunk',
+    async (payload) => {
+        const { code } = payload;
+        try {
+            return await AuthorizationApi.verifyEmail(code)
+        } catch (error){
+            console.error('Ошибка при подтверждении кода почты', error);
+            throw error;
+        }
+    }
+)
+
+
+export const resendEmailThunk = createAsyncThunk<any,resendEmailI>(
+    'login/resendEmailThunk',
+    async (payload) => {
+        const { email } = payload;
+        try {
+            return await AuthorizationApi.resendEmail(email)
+        } catch (error){
+            console.error('Ошибка при подтверждении кода почты', error);
+            throw error;
+        }
+    }
+)
+

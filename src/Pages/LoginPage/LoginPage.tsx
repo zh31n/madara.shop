@@ -3,6 +3,7 @@ import BlackButton from "../../UI/BlackButton/BlackButton.tsx";
 import {useForm} from "react-hook-form";
 import {useAppDispatch} from "../../Redux/store.ts";
 import {loginThunk} from "../../Redux/thunkCreators/authorization.ts";
+import {NavLink} from "react-router-dom";
 
 interface LoginFormValues {
     email: string;
@@ -35,13 +36,9 @@ const LoginPage = () => {
             <h1>Login</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={s.inpEmailCont}>
-                    <input aria-label={'email'} className={s.inpEmail} placeholder={'email'} type={'email'}
+                    <input aria-label={'email'} className={s.inpEmail} placeholder={'email или логин'} type={'text'}
                            {...register('email', {
-                               required: 'Пожалуйста, введите ваш email',
-                               pattern: {
-                                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                   message: 'Неверный формат email',
-                               },
+                               required: 'Пожалуйста, введите ваш email или логин',
                            })}
                     />
                     {formState.errors.email && (
@@ -64,6 +61,8 @@ const LoginPage = () => {
                     )}
                 </div>
                 <BlackButton text={'login'}/>
+
+                <p>Нет аккаунта? <NavLink to={'/register'}>Зарегистрироваться</NavLink></p>
             </form>
 
         </div>

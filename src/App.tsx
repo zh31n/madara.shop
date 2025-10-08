@@ -13,6 +13,8 @@ import RegisterPage from "./Pages/RegisterPage/RegisterPage.tsx";
 
 function App() {
 
+
+
     return (
         <BrowserRouter>
             <Header/>
