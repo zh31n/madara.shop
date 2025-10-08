@@ -7,6 +7,11 @@ const instance = axios.create({
     baseURL: "http://localhost:3003",
 })
 
+instance.interceptors.request.use((config) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`
+    return config;
+})
+
 
 export const HomePageApi = {
     async getNewArrivals() {
@@ -66,6 +71,11 @@ export const AuthorizationApi = {
     },
     async resendEmail(email: string) {
         return await instance.post(`auth/resend-email`, {email: email}).then(res => {
+            return res.data;
+        })
+    },
+    async getCurrentUser() {
+        return await instance.get('/users/profile').then(res => {
             return res.data;
         })
     }

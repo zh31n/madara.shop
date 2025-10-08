@@ -1,5 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {loginThunk, registerThunk, resendEmailThunk, verifyEmailThunk} from "../thunkCreators/authorization.ts";
+import {
+    fetchCurrentUser,
+    loginThunk,
+    registerThunk,
+    resendEmailThunk,
+    verifyEmailThunk
+} from "../thunkCreators/authorization.ts";
 
 
 interface state {
@@ -47,6 +53,10 @@ const authSlice = createSlice({
                 state.isConfirmed = true
             })
             .addCase(resendEmailThunk.fulfilled,() => {})
+            //@ts-ignore
+            .addCase(fetchCurrentUser.fulfilled, (state, action) => {
+                console.log(action.payload)
+            })
     }
 })
 

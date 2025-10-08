@@ -10,10 +10,15 @@ import Cart from "./Pages/Cart/Cart.tsx";
 import Profile from "./Pages/Profile/Profile.tsx";
 import LoginPage from "./Pages/LoginPage/LoginPage.tsx";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage.tsx";
+import {useEffect} from "react";
+import {useAppDispatch} from "./Redux/store.ts";
+import {fetchCurrentUser} from "./Redux/thunkCreators/authorization.ts";
 
 function App() {
-
-
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(fetchCurrentUser())
+    }, []);
 
     return (
         <BrowserRouter>

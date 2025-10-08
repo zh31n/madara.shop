@@ -85,3 +85,15 @@ export const resendEmailThunk = createAsyncThunk<any,resendEmailI>(
     }
 )
 
+export const fetchCurrentUser = createAsyncThunk(
+    'login/fetchCurrentUser',
+    async () => {
+            try {
+                return await AuthorizationApi.getCurrentUser()
+            } catch (e) {
+                console.error('Ошибка при подтверждении кода почты', e);
+                throw e;
+            }
+    }
+)
+
