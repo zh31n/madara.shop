@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     fetchCurrentUser,
-    loginThunk,
+    loginThunk, logoutThunk, refreshTokenAuth,
     registerThunk,
     resendEmailThunk,
     verifyEmailThunk
@@ -15,6 +15,7 @@ interface state {
     isRegistered: boolean,
     confirmCode:string
     isConfirmed: boolean,
+    isAuth: boolean,
 }
 
 const initialState: state = {
@@ -24,6 +25,7 @@ const initialState: state = {
     isRegistered: false,
     confirmCode:'',
     isConfirmed: false,
+    isAuth:false
 }
 
 const authSlice = createSlice({
@@ -55,7 +57,23 @@ const authSlice = createSlice({
             .addCase(resendEmailThunk.fulfilled,() => {})
             //@ts-ignore
             .addCase(fetchCurrentUser.fulfilled, (state, action) => {
-                console.log(action.payload)
+                state.email = action.payload.email;
+                state.id = action.payload.id;
+                state.login = action.payload.userName;
+                if(state.email){
+                    state.isAuth = true
+                }
+            })
+            //@ts-ignore
+            .addCase(refreshTokenAuth.fulfilled, (state, action) => {
+                localStorage.setItem('access_token',action.payload.token);
+            })
+            .addCase(logoutThunk.fulfilled, (state) => {
+                localStorage.removeItem('access_token');
+                state.isAuth = false;
+                state.id = null;
+                state.email = null;
+                state.login = null;
             })
     }
 })

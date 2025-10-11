@@ -1,17 +1,19 @@
 import s from './Cart.module.scss';
-import CartItem from "./components/CartItem/CartItem.tsx";
 import HorizontalLine from "../../UI/HorizontalLine/HorizontalLine.tsx";
 import BlackButton from "../../UI/BlackButton/BlackButton.tsx";
 
 const Cart = () => {
+
+
+    // const cartItems = useAppSelector(state => state.cart.cartItems);
+
+    // const cartItemsMap= cartItems.map(c => <CartItem price={c.price} />)
     return (
         <div className={'container'}>
             <div className={s.title}>your cart</div>
             <div className={s.cartContainer}>
                 <div className={s.cartItems}>
-                    <CartItem/>
-                    <CartItem/>
-                    <CartItem/>
+                    {/*{cartItems}*/}
                 </div>
                 <div className={s.infoCart}>
                     <div className={s.title}>Order Summary</div>

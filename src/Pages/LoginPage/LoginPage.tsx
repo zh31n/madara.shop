@@ -1,9 +1,9 @@
 import s from './LoginPage.module.scss';
 import BlackButton from "../../UI/BlackButton/BlackButton.tsx";
 import {useForm} from "react-hook-form";
-import {useAppDispatch} from "../../Redux/store.ts";
+import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
 import {loginThunk} from "../../Redux/thunkCreators/authorization.ts";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 interface LoginFormValues {
     email: string;
@@ -12,9 +12,9 @@ interface LoginFormValues {
 
 
 const LoginPage = () => {
-
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
-
+    const email = useAppSelector(state => state.auth.email);
     const {
         register,
         handleSubmit,
@@ -29,6 +29,10 @@ const LoginPage = () => {
 
     const onSubmit = (data: LoginFormValues) => {
         dispatch(loginThunk({ email: data.email, password: data.password }));
+    }
+
+    if(email){
+        navigate("/");
     }
 
     return (

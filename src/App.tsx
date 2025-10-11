@@ -11,14 +11,25 @@ import Profile from "./Pages/Profile/Profile.tsx";
 import LoginPage from "./Pages/LoginPage/LoginPage.tsx";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage.tsx";
 import {useEffect} from "react";
-import {useAppDispatch} from "./Redux/store.ts";
-import {fetchCurrentUser} from "./Redux/thunkCreators/authorization.ts";
+import {useAppDispatch, useAppSelector} from "./Redux/store.ts";
+import {fetchCurrentUser, refreshTokenAuth} from "./Redux/thunkCreators/authorization.ts";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.tsx";
 
 function App() {
     const dispatch = useAppDispatch();
+    const userId = useAppSelector(state => state.auth.id);
     useEffect(() => {
         dispatch(fetchCurrentUser())
+        if (localStorage.getItem('access_token')) {
+            dispatch(refreshTokenAuth())
+        }
     }, []);
+
+        useEffect(() => {
+            if (userId){
+
+            }
+        }, [userId]);
 
     return (
         <BrowserRouter>
@@ -27,8 +38,8 @@ function App() {
                 <Route path={'/'} element={<Home/>}/>
                 <Route path={'product/:id?'} element={<ProductPage/>}/>
                 <Route path={'catalog/'} element={<Catalog/>}/>
-                <Route path={'cart/'} element={<Cart/>}/>
-                <Route path={'profile/'} element={<Profile/>}/>
+                <Route path={'cart/'} element={<PrivateRoute><Cart/></PrivateRoute>}/>
+                <Route path={'profile/'} element={<PrivateRoute><Profile/></PrivateRoute>}/>
                 <Route path={'login/'} element={<LoginPage/>}/>
                 <Route path={'register/'} element={<RegisterPage/>}/>
             </Routes>

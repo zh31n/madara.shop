@@ -2,35 +2,35 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {AuthorizationApi} from "../../api";
 
 
-interface outPutLoginI{
-    password:string
-    email:string
+interface outPutLoginI {
+    password: string
+    email: string
 }
 
-export interface LoginI{
-    token:string
-    userData:{
-        email:string,
-        login:string,
-        id:string
+export interface LoginI {
+    token: string
+    userData: {
+        email: string,
+        login: string,
+        id: string
     }
 }
 
-export interface RegisterI{
-    password:string
-    email:string
-    login:string
+export interface RegisterI {
+    password: string
+    email: string
+    login: string
 }
 
 export interface verifyEmailI {
-    code:string
+    code: string
 }
 
 export interface resendEmailI {
-    email:string
+    email: string
 }
 
-export const loginThunk = createAsyncThunk<LoginI,outPutLoginI>(
+export const loginThunk = createAsyncThunk<LoginI, outPutLoginI>(
     'login/loginThunk',
     async (payload) => {
         const {email, password} = payload
@@ -45,26 +45,26 @@ export const loginThunk = createAsyncThunk<LoginI,outPutLoginI>(
     }
 )
 
-export const registerThunk = createAsyncThunk<any,RegisterI>(
+export const registerThunk = createAsyncThunk<any, RegisterI>(
     'login/registerThunk',
     async (payload) => {
-        const {email,password,login } = payload;
+        const {email, password, login} = payload;
         try {
-            return await AuthorizationApi.register(email,password,login)
-        } catch (error){
+            return await AuthorizationApi.register(email, password, login)
+        } catch (error) {
             console.error('Ошибка при регистрации', error);
             throw error;
         }
     }
 )
 
-export const verifyEmailThunk = createAsyncThunk<any,verifyEmailI>(
+export const verifyEmailThunk = createAsyncThunk<any, verifyEmailI>(
     'login/verifyEmailThunk',
     async (payload) => {
-        const { code } = payload;
+        const {code} = payload;
         try {
             return await AuthorizationApi.verifyEmail(code)
-        } catch (error){
+        } catch (error) {
             console.error('Ошибка при подтверждении кода почты', error);
             throw error;
         }
@@ -72,13 +72,13 @@ export const verifyEmailThunk = createAsyncThunk<any,verifyEmailI>(
 )
 
 
-export const resendEmailThunk = createAsyncThunk<any,resendEmailI>(
+export const resendEmailThunk = createAsyncThunk<any, resendEmailI>(
     'login/resendEmailThunk',
     async (payload) => {
-        const { email } = payload;
+        const {email} = payload;
         try {
             return await AuthorizationApi.resendEmail(email)
-        } catch (error){
+        } catch (error) {
             console.error('Ошибка при подтверждении кода почты', error);
             throw error;
         }
@@ -88,12 +88,36 @@ export const resendEmailThunk = createAsyncThunk<any,resendEmailI>(
 export const fetchCurrentUser = createAsyncThunk(
     'login/fetchCurrentUser',
     async () => {
-            try {
-                return await AuthorizationApi.getCurrentUser()
-            } catch (e) {
-                console.error('Ошибка при подтверждении кода почты', e);
-                throw e;
-            }
+        try {
+            return await AuthorizationApi.getCurrentUser()
+        } catch (e) {
+            console.error('Ошибка при подтверждении кода почты', e);
+            throw e;
+        }
+    }
+)
+
+export const refreshTokenAuth = createAsyncThunk(
+    'login/refreshTokenAuth',
+    async () => {
+        try {
+            return await AuthorizationApi.refreshTokenAuth()
+        } catch (e) {
+            console.error('Ошибка при рефреше токена', e);
+            throw e;
+        }
+    }
+)
+
+export const logoutThunk = createAsyncThunk(
+    'login/logoutThunk',
+    async() => {
+        try {
+            return await AuthorizationApi.logout()
+        }catch (e) {
+            console.error('ошибка при выходе', e);
+            throw e;
+        }
     }
 )
 

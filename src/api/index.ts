@@ -5,6 +5,7 @@ import {LoginI} from "../Redux/thunkCreators/authorization.ts";
 
 const instance = axios.create({
     baseURL: "http://localhost:3003",
+    withCredentials: true,
 })
 
 instance.interceptors.request.use((config) => {
@@ -55,7 +56,7 @@ export const ProductPageApi = {
 
 export const AuthorizationApi = {
     async login(email: string, password: string) {
-        return await instance.post<LoginI>(`auth/login`, {loginorEmail:email, password}).then(res => {
+        return await instance.post<LoginI>(`auth/login`, {loginorEmail: email, password}).then(res => {
             return res.data;
         })
     },
@@ -78,5 +79,27 @@ export const AuthorizationApi = {
         return await instance.get('/users/profile').then(res => {
             return res.data;
         })
+    },
+    async refreshTokenAuth() {
+        return await instance.post(`auth/refresh`,)
+            .then(res => {
+                return res.data;
+            })
+    },
+    async logout() {
+        return await instance.delete('auth/logout').then(res => {
+            return res.data;
+        })
     }
+}
+
+
+export const cartPageApi = {
+    async getCartItems(id: number) {
+        return await instance.get(`cart/${id}`).then(res => {
+            return res.data;
+        })
+    }
+
+
 }
