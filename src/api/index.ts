@@ -13,6 +13,22 @@ instance.interceptors.request.use((config) => {
     return config;
 })
 
+instance.interceptors.response.use((config) => {
+    return config;
+},async (error) => {
+    const originalRequest = error.config;
+    if(error.response.status === 500) {
+        try {
+            const response = await axios.get(`http://localhost:3003/auth/refresh`,
+                {withCredentials: true});
+            localStorage.setItem('access_token',response.data.access_token);
+            return instance.request(originalRequest);
+        } catch (e) {
+            console.error('not authenticated');
+        }
+    }
+})
+
 
 export const HomePageApi = {
     async getNewArrivals() {
@@ -97,6 +113,21 @@ export const AuthorizationApi = {
 export const cartPageApi = {
     async getCartItems(id: number) {
         return await instance.get(`cart/${id}`).then(res => {
+            return res.data;
+        })
+    },
+    async addCartItem(userId: number, productId: string, count: number, size: string) {
+        return await instance.post(`cart/add`, {userId, productId, count, size}).then(res => {
+            return res.data;
+        })
+    },
+    async deleteCartItem(id: number, productId: string) {
+        return await instance.delete(`cart/delete`,{data: {userId: id, productId}}).then(res => {
+            return res.data;
+        })
+    },
+    async changeCountCartItem(userId: number, productId: string, count: number) {
+        return await instance.post(`cart/update-count`, {userId, productId, count}).then(res => {
             return res.data;
         })
     }

@@ -4,6 +4,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import styles from './DropDownProfile.module.scss'
 import {useAppDispatch} from "../../Redux/store.ts";
 import {logoutThunk} from "../../Redux/thunkCreators/authorization.ts";
+import {cleanCart} from "../../Redux/Reducers/cartReducer.ts";
 
 // import {clearCart} from '../store/cartSlice';
 
@@ -40,7 +41,7 @@ function ProfileDropdown({ buttonClassName, iconClassName, userName }:Props) {
 
     const handleLogout = () => {
         dispatch(logoutThunk());
-        // dispatch(clearCart());
+        dispatch(cleanCart());
         navigate('/login');
         setIsOpen(false);
     };

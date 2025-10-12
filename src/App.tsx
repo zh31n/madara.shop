@@ -14,6 +14,7 @@ import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "./Redux/store.ts";
 import {fetchCurrentUser, refreshTokenAuth} from "./Redux/thunkCreators/authorization.ts";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.tsx";
+import {getCartItemsUserThunk} from "./Redux/thunkCreators/cartPage.ts";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -27,7 +28,7 @@ function App() {
 
         useEffect(() => {
             if (userId){
-
+                dispatch(getCartItemsUserThunk(+userId));
             }
         }, [userId]);
 

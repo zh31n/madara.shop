@@ -45,6 +45,7 @@ const authSlice = createSlice({
                 state.email = action.payload.userData.email
                 state.login = action.payload.userData.login
                 state.id = action.payload.userData.id
+                state.isAuth = true
                 localStorage.setItem('access_token', action.payload.token)
             })
             .addCase(registerThunk.fulfilled,(state) => {
@@ -60,9 +61,7 @@ const authSlice = createSlice({
                 state.email = action.payload.email;
                 state.id = action.payload.id;
                 state.login = action.payload.userName;
-                if(state.email){
-                    state.isAuth = true
-                }
+                state.isAuth = true
             })
             //@ts-ignore
             .addCase(refreshTokenAuth.fulfilled, (state, action) => {

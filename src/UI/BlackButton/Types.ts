@@ -3,4 +3,5 @@ export interface BtnProps {
     width?: number,
     height?: number
     fz?: number,
+    onClick?: () => void,
 }

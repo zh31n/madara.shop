@@ -1,12 +1,19 @@
 import s from './CartCounter.module.scss';
 
 
-const CartCounter = () => {
+interface CartCounterProps {
+    count: number;
+    increment: () => void;
+    decrement: () => void;
+}
+
+
+const CartCounter = ({count,decrement,increment}:CartCounterProps) => {
     return (
         <div className={s.counter}>
-            <button>-</button>
-            <div className={s.count}> 1 </div>
-            <button>+</button>
+            <button onClick={decrement}>-</button>
+            <div className={s.count}> {count} </div>
+            <button onClick={increment}>+</button>
         </div>
     );
 };

@@ -4,6 +4,7 @@ import {useForm} from "react-hook-form";
 import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
 import {loginThunk} from "../../Redux/thunkCreators/authorization.ts";
 import {NavLink, useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 interface LoginFormValues {
     email: string;
@@ -31,9 +32,13 @@ const LoginPage = () => {
         dispatch(loginThunk({ email: data.email, password: data.password }));
     }
 
-    if(email){
-        navigate("/");
-    }
+    useEffect(() => {
+        if (email) { // Если email получен (т.е. логин успешен или checkAuth был)
+            console.log("LoginPage: Email received, navigating to /");
+            navigate("/");
+        }
+    }, [email, navigate]);
+
 
     return (
         <div className={s.login}>

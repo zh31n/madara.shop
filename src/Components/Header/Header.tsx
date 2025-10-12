@@ -4,13 +4,15 @@ import HeaderNav from "./HeaderNav/HeaderNav.tsx";
 import SearchInput from "../../UI/SearchInput/SearchInput.tsx";
 import cartImg from '../../assets/img/basket.svg';
 // import profileImg from '../../assets/img/profile.svg';
-import {useAppSelector} from "../../Redux/store.ts";
 import ProfileDropdown from "../../UI/DropDownProfile/DropDownProfile.tsx";
+import {useAppSelector} from "../../Redux/store.ts";
+
 
 const Header = () => {
 
     const user = useAppSelector(state => state.auth.login);
     const isAuthenticated = useAppSelector(state => state.auth.isAuth);
+    const cartItemsCount = useAppSelector(state => state.cart.cartItems.length);
 
     return (
         <header className={s.header}>
@@ -20,21 +22,24 @@ const Header = () => {
                     <HeaderNav/>
                     <SearchInput/>
                     <section className={s.cartProfile}>
-                        <NavLink to={'/cart'}>
-                            <img src={cartImg} alt="cart image"/>
-                        </NavLink>
+                        <NavLink to="/cart" className={s.cartLink}>
+                            <div className={s.cartIconContainer}>
+                                <img src={cartImg} alt="Корзина" className={s.cartIcon} />
+                                {cartItemsCount > 0 && (
+                                    <div className={s.cartItemCount}>
+                                        {cartItemsCount}
+                                    </div>
+                                )}
 
-                        {/*<img src={profileImg} alt="profile image"/>*/}
+                            </div>
+                        </NavLink>
                         {isAuthenticated ? (
-                            // Если пользователь авторизован, показываем выпадающее меню профиля
-                            // Передаем стили, чтобы кнопка профиля выглядела как navLink
                             <ProfileDropdown
-                                buttonClassName={''} // Передаем класс для стилизации кнопки
-                                iconClassName={''} // Передаем класс для иконки (если есть)
-                                userName={user || 'Профиль'} // Имя пользователя
+                                buttonClassName={''}
+                                iconClassName={''}
+                                userName={user || 'Профиль'}
                             />
                         ) : (
-                            // Если не авторизован, показываем кнопку "Войти"
                             <Link to="/login">Войти</Link>
                         )}
 

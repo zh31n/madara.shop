@@ -34,7 +34,7 @@ function PopUpConfirmCode({isOpen, onSubmitCode,onResend}: IProps) {
     useEffect(() => {
         if (isOpen) {
             setIsAnimating(true);
-            setTimer(0); // Reset timer when popup opens
+            setTimer(60); // Reset timer when popup opens
             setIsResendDisabled(true);
         }
     }, [isOpen]);
@@ -69,7 +69,7 @@ function PopUpConfirmCode({isOpen, onSubmitCode,onResend}: IProps) {
 
     const handleResendClick = () => {
         onResend(); // Call the resend code function
-        setTimer(0); // Reset timer
+        setTimer(60); // Reset timer
         setIsResendDisabled(true);
     };
 
