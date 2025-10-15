@@ -1,7 +1,6 @@
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import styles from './PopUpConfirmCode.module.scss';
-import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
-import {setConfirmCode} from "../../Redux/Reducers/authReducer.ts";
+import {useAppDispatch} from "../../Redux/store.ts";
 
 /**
  * Компонент всплывающего окна для ввода кода верификации.
@@ -16,13 +15,13 @@ interface IProps {
     onClose?: () => boolean,
     onSubmitCode: () => void,
     onResend: () => void,
+    code: string,
+    setConfirmCode: (code: string) => any,
 }
 
-function PopUpConfirmCode({isOpen, onSubmitCode,onResend}: IProps) {
+function PopUpConfirmCode({isOpen, onSubmitCode,onResend,code,setConfirmCode}: IProps) {
 
     const dispatch = useAppDispatch();
-
-    const code = useAppSelector(state => state.auth.confirmCode);
     const [timer, setTimer] = useState(60);
     const [isResendDisabled, setIsResendDisabled] = useState(true);
 
@@ -59,12 +58,11 @@ function PopUpConfirmCode({isOpen, onSubmitCode,onResend}: IProps) {
         setIsAnimating(false);
     };
 
-    // Если isOpen false И мы не в процессе анимации (т.е. уже скрыли), не рендерим ничего
+
     if (!isOpen && !isAnimating) {
         return null;
     }
 
-    // Классы: base class + animation class
     const overlayClasses = `${styles.overlay} ${isAnimating ? '' : styles.hidden}`;
 
     const handleResendClick = () => {
@@ -76,12 +74,10 @@ function PopUpConfirmCode({isOpen, onSubmitCode,onResend}: IProps) {
     return (
         <div
             className={overlayClasses}
-            // Принудительно устанавливаем класс fadeOut, когда isAnimating становится false
-            // (Это нужно для React, чтобы он знал, какую анимацию применить)
         >
             <div
                 className={styles.popupContainer}
-                onClick={(e) => e.stopPropagation()} // Предотвращаем закрытие при клике внутри
+                onClick={(e) => e.stopPropagation()}
             >
                 <h2>Подтверждение кода</h2>
                 <p>Пожалуйста, введите код, отправленный на вашу почту:</p>
@@ -92,9 +88,9 @@ function PopUpConfirmCode({isOpen, onSubmitCode,onResend}: IProps) {
                     value={code}
                     onChange={(e) => dispatch(setConfirmCode(e.target.value))}
                 />
-                <button className={styles.button} onClick={handleSubmit}>
+                <div className={styles.button} onClick={handleSubmit}>
                     Подтвердить
-                </button>
+                </div>
                 <p style={{marginTop: '10px',textAlign:'center'}}>
                     {isResendDisabled ? (
                         `Повторная отправка через ${timer} секунд`

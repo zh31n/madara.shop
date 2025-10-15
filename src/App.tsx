@@ -15,6 +15,8 @@ import {useAppDispatch, useAppSelector} from "./Redux/store.ts";
 import {fetchCurrentUser, refreshTokenAuth} from "./Redux/thunkCreators/authorization.ts";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.tsx";
 import {getCartItemsUserThunk} from "./Redux/thunkCreators/cartPage.ts";
+import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword.tsx";
+import ResetPasswordPage from "./Pages/ResetPasswordPage/ResetPasswordPage.tsx";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -43,6 +45,8 @@ function App() {
                 <Route path={'profile/'} element={<PrivateRoute><Profile/></PrivateRoute>}/>
                 <Route path={'login/'} element={<LoginPage/>}/>
                 <Route path={'register/'} element={<RegisterPage/>}/>
+                <Route path={'forgot/'} element={<ForgotPassword/>}/>
+                <Route path={'reset/'} element={<ResetPasswordPage/>}/>
             </Routes>
             <SubscribeNews/>
             <Footer/>

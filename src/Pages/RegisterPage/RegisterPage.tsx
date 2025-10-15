@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
 import {registerThunk, resendEmailThunk, verifyEmailThunk} from "../../Redux/thunkCreators/authorization.ts";
 import PopUpConfirmCode from "../../UI/PopUpConfirmCode/PopUpConfirmCode.tsx";
-import {setEmail} from "../../Redux/Reducers/authReducer.ts";
+import {setConfirmCode, setEmail} from "../../Redux/Reducers/authReducer.ts";
 import {useNavigate} from "react-router-dom";
 import {FC} from "react";
 
@@ -15,7 +15,7 @@ interface LoginFormValues {
 }
 
 
-const RegisterPage:FC = () => {
+const RegisterPage: FC = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -23,6 +23,7 @@ const RegisterPage:FC = () => {
     const currentEmail = useAppSelector(state => state.auth.email);
     const confirmCode = useAppSelector(state => state.auth.confirmCode);
     const isConfirmed = useAppSelector(state => state.auth.isConfirmed);
+
 
     const handleCodeSubmit = () => dispatch(verifyEmailThunk({code: confirmCode}));
 
@@ -39,7 +40,7 @@ const RegisterPage:FC = () => {
         }// Валидация при потере фокуса
     });
 
-    const onSubmit = (data: LoginFormValues,e:any) => {
+    const onSubmit = (data: LoginFormValues, e: any) => {
         e.preventDefault();
         dispatch(registerThunk({email: data.email, password: data.password, login: data.login}));
         dispatch(setEmail(data.email));
@@ -47,7 +48,7 @@ const RegisterPage:FC = () => {
 
     const onResend = () => dispatch(resendEmailThunk({email: currentEmail!}))
 
-    if(isConfirmed){
+    if (isConfirmed) {
         navigate('/login');
     }
 
@@ -103,7 +104,8 @@ const RegisterPage:FC = () => {
                     )}
                 </div>
                 <BlackButton text={'register'}/>
-                <PopUpConfirmCode isOpen={isRegistered} onResend={onResend} onSubmitCode={handleCodeSubmit}/>
+                <PopUpConfirmCode code={confirmCode} setConfirmCode={setConfirmCode} isOpen={isRegistered}
+                                  onResend={onResend} onSubmitCode={handleCodeSubmit}/>
             </form>
         </div>
     );

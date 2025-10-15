@@ -131,6 +131,28 @@ export const cartPageApi = {
             return res.data;
         })
     }
+}
 
 
+export const ResetPasswordApi = {
+    async sendResetCode(email: string) {
+        return await instance.post(`auth/forgot-password`, {email: email}).then(res => {
+            return res.data;
+        })
+    },
+    async verifyCode(email:string,code: string) {
+        return await instance.post(`auth/verify-forgot-code`, {email, code}).then(res => {
+            return res.data;
+        })
+    },
+    async resendResetCode(email:string) {
+        return await instance.post(`auth/resend-forgot-code`, {email: email}).then(res => {
+            return res.data;
+        })
+    },
+    async resetPassword(email:string,code:string,password:string) {
+        return await instance.post(`auth/reset-password`, {email,password,code}).then(res => {
+            return res.data;
+        })
+    }
 }

@@ -70,8 +70,10 @@ const LoginPage = () => {
                     )}
                 </div>
                 <BlackButton text={'login'}/>
-
-                <p>Нет аккаунта? <NavLink to={'/register'}>Зарегистрироваться</NavLink></p>
+                <div style={{marginTop: '30px'}}>
+                    <p>Нет аккаунта? <NavLink to={'/register'}>Зарегистрироваться</NavLink></p>
+                    <p>Забыли пароль? <NavLink to={'/forgot'}>Восстановить пароль</NavLink></p>
+                </div>
             </form>
 
         </div>

@@ -5,6 +5,7 @@ import catalogPageReducer from "./Reducers/catalogPageReducer.ts";
 import productPageReducer from "./Reducers/productPageReducer.ts";
 import authReducer from "./Reducers/authReducer.ts";
 import cartReducer from "./Reducers/cartReducer.ts";
+import resetPasswordReducer from "./Reducers/resetPasswordReducer.ts";
 
 export const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
         productPage: productPageReducer,
         auth: authReducer,
         cart: cartReducer,
+        resetPassword: resetPasswordReducer,
     },
 })
 
