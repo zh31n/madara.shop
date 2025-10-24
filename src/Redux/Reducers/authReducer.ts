@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
+    changeLoginUserThunk,
     fetchCurrentUser,
     loginThunk, logoutThunk, refreshTokenAuth,
     registerThunk,
@@ -13,9 +14,10 @@ interface state {
     login: string | null,
     id: string | null,
     isRegistered: boolean,
-    confirmCode:string
+    confirmCode: string
     isConfirmed: boolean,
     isAuth: boolean,
+    isChangeLoginSuccess: boolean
 }
 
 const initialState: state = {
@@ -23,9 +25,10 @@ const initialState: state = {
     login: null,
     id: null,
     isRegistered: false,
-    confirmCode:'',
+    confirmCode: '',
     isConfirmed: false,
-    isAuth:false
+    isAuth: false,
+    isChangeLoginSuccess: false
 }
 
 const authSlice = createSlice({
@@ -37,6 +40,9 @@ const authSlice = createSlice({
         },
         setConfirmCode: (state, action) => {
             state.confirmCode = action.payload;
+        },
+        setNewLoginR: (state, action) => {
+            state.login = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -48,14 +54,15 @@ const authSlice = createSlice({
                 state.isAuth = true
                 localStorage.setItem('access_token', action.payload.token)
             })
-            .addCase(registerThunk.fulfilled,(state) => {
+            .addCase(registerThunk.fulfilled, (state) => {
                 state.isRegistered = true;
             })
-            .addCase(verifyEmailThunk.fulfilled,(state) => {
+            .addCase(verifyEmailThunk.fulfilled, (state) => {
                 state.isRegistered = false
                 state.isConfirmed = true
             })
-            .addCase(resendEmailThunk.fulfilled,() => {})
+            .addCase(resendEmailThunk.fulfilled, () => {
+            })
             //@ts-ignore
             .addCase(fetchCurrentUser.fulfilled, (state, action) => {
                 state.email = action.payload.email;
@@ -65,7 +72,7 @@ const authSlice = createSlice({
             })
             //@ts-ignore
             .addCase(refreshTokenAuth.fulfilled, (state, action) => {
-                localStorage.setItem('access_token',action.payload.token);
+                localStorage.setItem('access_token', action.payload.token);
             })
             .addCase(logoutThunk.fulfilled, (state) => {
                 localStorage.removeItem('access_token');
@@ -74,9 +81,14 @@ const authSlice = createSlice({
                 state.email = null;
                 state.login = null;
             })
+            .addCase(changeLoginUserThunk.fulfilled, (state, action) => {
+                if (action.payload.data.status === 200) {
+                    state.isChangeLoginSuccess = true
+                }
+            })
     }
 })
 
-export const {setEmail,setConfirmCode} = authSlice.actions;
+export const {setEmail, setConfirmCode,setNewLoginR} = authSlice.actions;
 
 export default authSlice.reducer;

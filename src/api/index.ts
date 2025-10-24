@@ -1,6 +1,7 @@
 import axios from "axios";
 import {feedbackItemDbI, newArrivalsI} from "../types/thunks.ts";
-import {LoginI} from "../Redux/thunkCreators/authorization.ts";
+import {fetchCurrentUser, LoginI} from "../Redux/thunkCreators/authorization.ts";
+import {useAppDispatch} from "../Redux/store.ts";
 
 
 const instance = axios.create({
@@ -15,13 +16,17 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use((config) => {
     return config;
-},async (error) => {
+}, async (error) => {
     const originalRequest = error.config;
-    if(error.response.status === 500 || error.response.status === 401) {
+    if (error.response.status === 500 || error.response.status === 401) {
         try {
             const response = await axios.post(`http://localhost:3003/auth/refresh`,
                 {withCredentials: true});
-            localStorage.setItem('access_token',response.data.access_token);
+            localStorage.setItem('access_token', response.data.access_token);
+            if (response.status === 200) {
+                const dispatch = useAppDispatch()
+                dispatch(fetchCurrentUser())
+            }
             return instance.request(originalRequest);
         } catch (e) {
             console.error('not authenticated');
@@ -122,7 +127,7 @@ export const cartPageApi = {
         })
     },
     async deleteCartItem(id: number, productId: string) {
-        return await instance.delete(`cart/delete`,{data: {userId: id, productId}}).then(res => {
+        return await instance.delete(`cart/delete`, {data: {userId: id, productId}}).then(res => {
             return res.data;
         })
     },
@@ -140,18 +145,27 @@ export const ResetPasswordApi = {
             return res.data;
         })
     },
-    async verifyCode(email:string,code: string) {
+    async verifyCode(email: string, code: string) {
         return await instance.post(`auth/verify-forgot-code`, {email, code}).then(res => {
             return res.data;
         })
     },
-    async resendResetCode(email:string) {
+    async resendResetCode(email: string) {
         return await instance.post(`auth/resend-forgot-code`, {email: email}).then(res => {
             return res.data;
         })
     },
-    async resetPassword(email:string,code:string,password:string) {
-        return await instance.post(`auth/reset-password`, {email,password,code}).then(res => {
+    async resetPassword(email: string, code: string, password: string) {
+        return await instance.post(`auth/reset-password`, {email, password, code}).then(res => {
+            return res.data;
+        })
+    }
+}
+
+
+export const ProfilePageApi = {
+    async changeLoginUser(id: string, newLogin:string) {
+        return await instance.post(`users/change-login`, {id, newLogin}).then(res => {
             return res.data;
         })
     }

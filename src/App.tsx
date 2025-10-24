@@ -26,7 +26,7 @@ function App() {
         if (localStorage.getItem('access_token')) {
             dispatch(refreshTokenAuth())
         }
-    }, []);
+    }, [localStorage.getItem('access_token')]);
 
         useEffect(() => {
             if (userId){

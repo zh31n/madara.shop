@@ -1,10 +1,15 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {AuthorizationApi} from "../../api";
+import {AuthorizationApi, ProfilePageApi} from "../../api";
 
 
 interface outPutLoginI {
     password: string
     email: string
+}
+
+interface outChangeLoginI{
+    id:string,
+    newLogin:string,
 }
 
 export interface LoginI {
@@ -116,6 +121,19 @@ export const logoutThunk = createAsyncThunk(
             return await AuthorizationApi.logout()
         }catch (e) {
             console.error('ошибка при выходе', e);
+            throw e;
+        }
+    }
+)
+
+
+export const changeLoginUserThunk = createAsyncThunk(
+    'profile/changeLoginUserThunk',
+    async({newLogin,id}:outChangeLoginI) => {
+        try {
+            return await ProfilePageApi.changeLoginUser(id,newLogin)
+        } catch (e) {
+            console.error('ошибка при смене логина', e);
             throw e;
         }
     }
