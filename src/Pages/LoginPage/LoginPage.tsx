@@ -15,7 +15,7 @@ interface LoginFormValues {
 const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const email = useAppSelector(state => state.auth.email);
+    const isAuth = useAppSelector(state => state.auth.isAuth);
     const {
         register,
         handleSubmit,
@@ -33,11 +33,11 @@ const LoginPage = () => {
     }
 
     useEffect(() => {
-        if (email) { // Если email получен (т.е. логин успешен или checkAuth был)
+        if (isAuth) { // Если email получен (т.е. логин успешен или checkAuth был)
             console.log("LoginPage: Email received, navigating to /");
             navigate("/");
         }
-    }, [email, navigate]);
+    }, [isAuth, navigate]);
 
 
     return (

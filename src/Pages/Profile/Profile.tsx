@@ -17,20 +17,18 @@ const Profile = () => {
                 </div>
                 <div className={s.inputs}>
                     <div>
-                        <label>Your name</label>
+                        <label>Your login</label>
                         <WhiteInput placeholder={'Enter new name...'} w={509} />
-                    </div>
-                    <div>
-                        <label>Your surname</label>
-                        <WhiteInput placeholder={'Enter new surname...'} w={509} />
-                    </div>
-                    <div>
-                        <label>Your phone number</label>
-                        <WhiteInput placeholder={'Enter phone number...'} w={509} />
+                        <BlackButton text={'change login'} width={160}/>
                     </div>
                     <div>
                         <label>Your email address</label>
                         <WhiteInput placeholder={'Enter new email...'} w={509} />
+                        <BlackButton text={'change email'}  width={160}/>
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <BlackButton text={'change password '}/>
                     </div>
                     <BlackButton text={'Apply'} width={88} fz={14}/>
                 </div>

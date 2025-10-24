@@ -17,9 +17,9 @@ instance.interceptors.response.use((config) => {
     return config;
 },async (error) => {
     const originalRequest = error.config;
-    if(error.response.status === 500) {
+    if(error.response.status === 500 || error.response.status === 401) {
         try {
-            const response = await axios.get(`http://localhost:3003/auth/refresh`,
+            const response = await axios.post(`http://localhost:3003/auth/refresh`,
                 {withCredentials: true});
             localStorage.setItem('access_token',response.data.access_token);
             return instance.request(originalRequest);
