@@ -1,10 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
+    changeEmailThunk,
     changeLoginUserThunk,
     fetchCurrentUser,
     loginThunk, logoutThunk, refreshTokenAuth,
-    registerThunk,
-    resendEmailThunk,
+    registerThunk, resendChangeEmailCodeThunk,
+    resendEmailThunk, sendChangeEmailCodeThunk, verifyEmailChangeCode,
     verifyEmailThunk
 } from "../thunkCreators/authorization.ts";
 
@@ -18,6 +19,7 @@ interface state {
     isConfirmed: boolean,
     isAuth: boolean,
     isChangeLoginSuccess: boolean
+    isChangeEmailSuccess: boolean
 }
 
 const initialState: state = {
@@ -28,7 +30,8 @@ const initialState: state = {
     confirmCode: '',
     isConfirmed: false,
     isAuth: false,
-    isChangeLoginSuccess: false
+    isChangeLoginSuccess: false,
+    isChangeEmailSuccess: false,
 }
 
 const authSlice = createSlice({
@@ -81,7 +84,20 @@ const authSlice = createSlice({
                 state.email = null;
                 state.login = null;
             })
+
+            // user change
             .addCase(changeLoginUserThunk.fulfilled, (state, action) => {
+                if (action.payload.data.status === 200) {
+                    state.isChangeLoginSuccess = true
+                }
+            })
+            .addCase(sendChangeEmailCodeThunk.fulfilled, () => {
+            })
+            .addCase(resendChangeEmailCodeThunk.fulfilled, () => {})
+            .addCase(changeEmailThunk.fulfilled,(state, action) => {
+                state.email = action.payload.data.email
+            })
+            .addCase(verifyEmailChangeCode.fulfilled, (state, action) => {
                 if (action.payload.data.status === 200) {
                     state.isChangeLoginSuccess = true
                 }

@@ -6,25 +6,65 @@ import BlackButton from "../../UI/BlackButton/BlackButton.tsx";
 import {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
 import PopUpSuccess from "../../UI/PopUpSuccess/PopUpSuccess.tsx";
-import {changeLoginUserThunk} from "../../Redux/thunkCreators/authorization.ts";
+import {
+    changeEmailThunk,
+    changeLoginUserThunk,
+    resendChangeEmailCodeThunk,
+    sendChangeEmailCodeThunk, verifyEmailChangeCode
+} from "../../Redux/thunkCreators/authorization.ts";
 import {setNewLoginR} from "../../Redux/Reducers/authReducer.ts";
+import PopUpConfirmCode from "../../UI/PopUpConfirmCode/PopUpConfirmCode.tsx";
 
 const Profile = () => {
 
     const currentLogin = useAppSelector(state => state.auth.login);
     const currentEmail = useAppSelector(state => state.auth.email);
     const id = useAppSelector(state => state.auth.id);
+
     const [newLogin, setNewLogin] = useState<string>(currentLogin!);
     const [newEmail, setNewEmail] = useState<string>(currentEmail!)
     const [isOpenPopUp, setIsOpenPopUp] = useState<boolean>(false);
+    const [confirmCode, setConfirmCode] = useState<string>('');
+    const [isOpenConfirmPopUp, setIsOpenConfirmPopUp] = useState<boolean>(false);
+    const [isOpenConfirmSuccess, setIsOpenConfirmSuccess] = useState<boolean>(false);
     const dispatch = useAppDispatch();
+
     const onChangeLogin = (newLogin: string) => setNewLogin(newLogin);
+
     const onChangeEmail = (newEmail: string) => setNewEmail(newEmail);
+
     const onClosePopUp = () => setIsOpenPopUp(!isOpenPopUp);
+
+    const onClosePopUpSuccess = () => setIsOpenConfirmSuccess(!isOpenConfirmSuccess);
+
+
     const onClickChangeLogin = () => {
         dispatch(changeLoginUserThunk({newLogin, id: id!}))
         dispatch(setNewLoginR(newLogin))
         setIsOpenPopUp(true)
+    }
+
+    const onClickChangeEmail = () => {
+        if (currentEmail === newEmail) {
+            alert('Новый логин совпадает с текущим. Пожалуйста, введите другой логин.')
+            return;
+        }
+        dispatch(sendChangeEmailCodeThunk({oldEmail: currentEmail!, email: newEmail}))
+        setIsOpenConfirmPopUp(true)
+    }
+
+    const resendChangeEmailCode = () => {
+        dispatch(resendChangeEmailCodeThunk({oldEmail: currentEmail!, email: newEmail}))
+    }
+    const submitEmailCode = () => {
+        if (currentEmail === newEmail) {
+            alert('Новый логин совпадает с текущим. Пожалуйста, введите другой логин.')
+            return;
+        }
+        dispatch(verifyEmailChangeCode({email: currentEmail!, code: confirmCode!}))
+        dispatch(changeEmailThunk({email: newEmail!, id: id!}))
+        setIsOpenConfirmSuccess(true)
+        setIsOpenConfirmPopUp(false)
     }
 
 
@@ -49,7 +89,7 @@ const Profile = () => {
                         <label>Your email address</label>
                         <WhiteInput value={newEmail} onChange={onChangeEmail} placeholder={'Enter new email...'}
                                     w={509}/>
-                        <BlackButton text={'change email'} width={160}/>
+                        <BlackButton onClick={onClickChangeEmail} text={'change email'} width={160}/>
                     </div>
                     <div>
                         <label>Password</label>
@@ -59,6 +99,12 @@ const Profile = () => {
                 </div>
             </div>
             <PopUpSuccess isOpen={isOpenPopUp} onClose={onClosePopUp} message={'Ваш логин успешно изменен'}/>
+            <PopUpSuccess isOpen={isOpenConfirmSuccess} onClose={onClosePopUpSuccess}
+                          message={'Ваш email успешно изменен'}/>
+            <PopUpConfirmCode isOpen={isOpenConfirmPopUp} onSubmitCode={submitEmailCode}
+                              onResend={resendChangeEmailCode}
+                              code={confirmCode}
+                              setConfirmCode={setConfirmCode}/>
         </div>
     );
 };

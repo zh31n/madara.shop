@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {AuthorizationApi, ProfilePageApi} from "../../api";
+import {AuthorizationApi, ProfilePageApi, ResetPasswordApi} from "../../api";
 
 
 interface outPutLoginI {
@@ -7,9 +7,9 @@ interface outPutLoginI {
     email: string
 }
 
-interface outChangeLoginI{
-    id:string,
-    newLogin:string,
+interface outChangeLoginI {
+    id: string,
+    newLogin: string,
 }
 
 export interface LoginI {
@@ -33,6 +33,11 @@ export interface verifyEmailI {
 
 export interface resendEmailI {
     email: string
+}
+
+export interface sendChangeEmailI {
+    email: string
+    oldEmail: string
 }
 
 export const loginThunk = createAsyncThunk<LoginI, outPutLoginI>(
@@ -116,22 +121,22 @@ export const refreshTokenAuth = createAsyncThunk(
 
 export const logoutThunk = createAsyncThunk(
     'login/logoutThunk',
-    async() => {
+    async () => {
         try {
             return await AuthorizationApi.logout()
-        }catch (e) {
+        } catch (e) {
             console.error('ошибка при выходе', e);
             throw e;
         }
     }
 )
 
-
+//change user data
 export const changeLoginUserThunk = createAsyncThunk(
     'profile/changeLoginUserThunk',
-    async({newLogin,id}:outChangeLoginI) => {
+    async ({newLogin, id}: outChangeLoginI) => {
         try {
-            return await ProfilePageApi.changeLoginUser(id,newLogin)
+            return await ProfilePageApi.changeLoginUser(id, newLogin)
         } catch (e) {
             console.error('ошибка при смене логина', e);
             throw e;
@@ -139,3 +144,31 @@ export const changeLoginUserThunk = createAsyncThunk(
     }
 )
 
+
+export const sendChangeEmailCodeThunk = createAsyncThunk(
+    'profile/sendChangeEmailCodeThunk',
+    async ({oldEmail, email}: sendChangeEmailI) => {
+        return await ProfilePageApi.sendChangeEmailCode(oldEmail, email)
+    }
+)
+
+export const resendChangeEmailCodeThunk = createAsyncThunk(
+    'profile/resendChangeEmailCodeThunk',
+    async ({oldEmail, email}: sendChangeEmailI) => {
+        return await ProfilePageApi.resendChangeEmailCode(oldEmail, email)
+    }
+)
+
+export const verifyEmailChangeCode = createAsyncThunk(
+    'profile/verifyEmailChangeCodeThunk',
+    async ({email, code}: { email: string, code: string }) => {
+        return ResetPasswordApi.verifyCode(email, code)
+    }
+)
+
+export const changeEmailThunk = createAsyncThunk(
+    'profile/changeEmail',
+    async({email,id}:{email:string,id:string}) => {
+        return await ProfilePageApi.changeEmail(email,id)
+    }
+)

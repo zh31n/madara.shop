@@ -20,10 +20,10 @@ instance.interceptors.response.use((config) => {
     const originalRequest = error.config;
     if (error.response.status === 500 || error.response.status === 401) {
         try {
-            const response = await axios.post(`http://localhost:3003/auth/refresh`,
-                {withCredentials: true});
-            localStorage.setItem('access_token', response.data.access_token);
-            if (response.status === 200) {
+            const response = await axios.post(`http://localhost:3003/auth/refresh`, {withCredentials: true});
+            if(response.status === 200) {
+                debugger
+                localStorage.setItem('access_token', response.data.access_token);
                 const dispatch = useAppDispatch()
                 dispatch(fetchCurrentUser())
             }
@@ -166,6 +166,21 @@ export const ResetPasswordApi = {
 export const ProfilePageApi = {
     async changeLoginUser(id: string, newLogin:string) {
         return await instance.post(`users/change-login`, {id, newLogin}).then(res => {
+            return res.data;
+        })
+    },
+    async sendChangeEmailCode(oldEmail: string, email:string) {
+        return await instance.post(`users/send-change-email`, {email,oldEmail}).then(res => {
+            return res.data;
+        })
+    },
+    async resendChangeEmailCode(oldEmail: string, email:string) {
+        return await instance.post(`users/resend-email-code`, {email,oldEmail}).then(res => {
+            return res.data;
+        })
+    },
+    async changeEmail(email:string,id:string) {
+        return await instance.post(`users/change-email`, {email,id}).then(res => {
             return res.data;
         })
     }
