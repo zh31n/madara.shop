@@ -172,3 +172,6 @@ export const changeEmailThunk = createAsyncThunk(
         return await ProfilePageApi.changeEmail(email,id)
     }
 )
+
+//sessions
+

@@ -17,6 +17,8 @@ import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.tsx";
 import {getCartItemsUserThunk} from "./Redux/thunkCreators/cartPage.ts";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword.tsx";
 import ResetPasswordPage from "./Pages/ResetPasswordPage/ResetPasswordPage.tsx";
+import ProfileInfo from "./Pages/Profile/Components/ProfileInfo/ProfileInfo.tsx";
+import UserSessions from "./Pages/Profile/Components/UserSessions/UserSessions.tsx";
 
 function App() {
     const dispatch = useAppDispatch();
@@ -28,11 +30,11 @@ function App() {
         }
     }, [localStorage.getItem('access_token')]);
 
-        useEffect(() => {
-            if (userId){
-                dispatch(getCartItemsUserThunk(+userId));
-            }
-        }, [userId]);
+    useEffect(() => {
+        if (userId) {
+            dispatch(getCartItemsUserThunk(+userId));
+        }
+    }, [userId]);
 
     return (
         <BrowserRouter>
@@ -42,7 +44,11 @@ function App() {
                 <Route path={'product/:id?'} element={<ProductPage/>}/>
                 <Route path={'catalog/'} element={<Catalog/>}/>
                 <Route path={'cart/'} element={<PrivateRoute><Cart/></PrivateRoute>}/>
-                <Route path={'profile/'} element={<PrivateRoute><Profile/></PrivateRoute>}/>
+                <Route path={'profile/'} element={<PrivateRoute><Profile/></PrivateRoute>}>
+                    <Route index={true} element={<ProfileInfo/>}/>
+                    <Route path={'sessions'} element={<UserSessions/>}/>
+                    <Route path={'orders'} element={<>заказы</>}/>
+                </Route>
                 <Route path={'login/'} element={<LoginPage/>}/>
                 <Route path={'register/'} element={<RegisterPage/>}/>
                 <Route path={'forgot/'} element={<ForgotPassword/>}/>
