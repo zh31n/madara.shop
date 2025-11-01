@@ -16,10 +16,12 @@ export interface CartItemI {
     size:string
     count:number
     productId:string
-    userId:number
+    userId:number,
+    hideCount?: boolean
+    hideDel?:boolean
 }
 
-const CartItem = ({name,photo,price,size,count,productId,userId}:CartItemI) => {
+const CartItem = ({name,photo,price,size,count,productId,userId,hideCount,hideDel}:CartItemI) => {
 
     const dispatch = useAppDispatch();
     const dataT: outputDataChangeCounterI = {
@@ -57,14 +59,14 @@ const CartItem = ({name,photo,price,size,count,productId,userId}:CartItemI) => {
             <div className={s.cartItemInfo}>
                 <div className={s.nameTrash}>
                     <div className={s.name}>{name}</div>
-                    <img onClick={deleteCartItem}  src={Trash} alt={'Trash'}/>
+                    { hideDel ? '' : <img onClick={deleteCartItem} src={Trash} alt={'Trash'}/>}
                 </div>
                 <div className={s.otherInfo}>
                     <div className={s.title}>Size:</div>{size.toUpperCase()}
                 </div>
                 <div className={s.priceCounter}>
                     <div className={s.price}>${price}</div>
-                    <CartCounter decrement={decrement} increment={increment} count={count}/>
+                    <CartCounter hideCount={hideCount} decrement={decrement} increment={increment} count={count}/>
                 </div>
             </div>
         </div>

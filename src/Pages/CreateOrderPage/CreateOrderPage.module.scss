@@ -1,0 +1,32 @@
+.cont {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  .userInfo{
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .inputCont {
+
+    display: flex;
+    flex-direction: column;
+    label{
+      margin-left: 2rem;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.inp{
+  width: 326px;
+  height: 48px;
+  background: #ece8e8;
+  border-radius: 20px;
+  padding-left: 2rem;
+  &::placeholder{
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+  }
+}

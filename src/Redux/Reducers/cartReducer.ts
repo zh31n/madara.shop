@@ -6,6 +6,7 @@ import {
     deleteCartItemUser,
     getCartItemsUserThunk
 } from "../thunkCreators/cartPage.ts";
+import {clearCartThunk} from "../thunkCreators/ordersThunks.ts";
 
 
 interface state {
@@ -16,10 +17,10 @@ interface state {
 }
 
 const initialState: state = {
-    cartItems:[],
+    cartItems: [],
     Subtotal: 0,
-    Delivery:0,
-    Total:0,
+    Delivery: 0,
+    Total: 0,
 
 }
 
@@ -29,33 +30,33 @@ const cartSlice = createSlice({
     reducers: {
         incrementCartItem: (state, action) => {
             state.cartItems = state.cartItems.map(item => {
-                // Если это элемент, который нужно уменьшить
+
                 if (item.productId === action.payload) {
-                    // Если количество больше 1, уменьшаем его
+
                     if (item.count > 1) {
                         return {
-                            ...item, // Копируем все остальные свойства товара
-                            count: item.count + 1 // Уменьшаем счетчик
+                            ...item,
+                            count: item.count + 1
                         };
                     }
                 }
-                // Если это не тот элемент, возвращаем его без изменений
+
                 return item;
             }).filter(item => item !== null && item.count > 0);
         },
         decrementCartItem: (state, action) => {
             state.cartItems = state.cartItems.map(item => {
-                // Если это элемент, который нужно уменьшить
+
                 if (item.productId === action.payload) {
-                    // Если количество больше 1, уменьшаем его
+
                     if (item.count > 1) {
                         return {
-                            ...item, // Копируем все остальные свойства товара
-                            count: item.count - 1 // Уменьшаем счетчик
+                            ...item,
+                            count: item.count - 1
                         };
                     }
                 }
-                // Если это не тот элемент, возвращаем его без изменений
+
                 return item;
             })
         },
@@ -65,22 +66,25 @@ const cartSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getCartItemsUserThunk.fulfilled,(state, action) => {
+            .addCase(getCartItemsUserThunk.fulfilled, (state, action) => {
                 state.cartItems = action.payload.cart;
             })
-            .addCase(addCartItemThunk.fulfilled,(state, action) => {
+            .addCase(addCartItemThunk.fulfilled, (state, action) => {
                 state.cartItems = action.payload
             })
-            .addCase(deleteCartItemUser.fulfilled,(state, action) => {
+            .addCase(deleteCartItemUser.fulfilled, (state, action) => {
                 state.cartItems = action.payload.cart;
             })
-            .addCase(changeCountCartItem.fulfilled,(state, action) => {
+            .addCase(changeCountCartItem.fulfilled, (state, action) => {
                 state.cartItems = action.payload.cart;
+            })
+            .addCase(clearCartThunk.fulfilled, (state) => {
+                state.cartItems = []
             })
 
     }
 })
 
-export const {incrementCartItem,decrementCartItem,cleanCart} = cartSlice.actions;
+export const {incrementCartItem, decrementCartItem, cleanCart} = cartSlice.actions;
 
 export default cartSlice.reducer;

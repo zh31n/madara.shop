@@ -16,7 +16,7 @@ const Profile = () => {
                     <HorizontalLine margin={4}/>
                     <Link to={'/profile/sessions'}>Sessions</Link>
                 </div>
-               <Outlet/>
+                <Outlet/>
             </div>
 
         </div>

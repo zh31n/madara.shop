@@ -5,7 +5,8 @@ import {useAppDispatch, useAppSelector} from "../../Redux/store.ts";
 import CartItem from "./components/CartItem/CartItem.tsx";
 import {useEffect} from "react";
 import {getCartItemsUserThunk} from "../../Redux/thunkCreators/cartPage.ts";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {setTotalPrice} from "../../Redux/Reducers/ordersReducer.ts";
 
 const Cart = () => {
 
@@ -13,6 +14,8 @@ const Cart = () => {
     const baseUrl = 'http://localhost:3003';
     const cartItems = useAppSelector(state => state.cart.cartItems);
     const userId = useAppSelector(state => state.auth.id);
+    const navigate = useNavigate();
+
     useEffect(() => {
         dispatch(getCartItemsUserThunk(+userId!))
     }, []);
@@ -23,6 +26,10 @@ const Cart = () => {
     let persent = '20%'
     let discardSum =  totalSum / 100 * parseFloat(persent)
     let totalsSum = totalSum - (discardSum - 15);
+
+    useEffect(() => {
+        dispatch(setTotalPrice(totalsSum))
+    }, [totalsSum]);
 
 
     return (
@@ -43,7 +50,7 @@ const Cart = () => {
                         </div>
                         <div className={s.infoLine}>
                             <div className={s.sub}>Discount (-20%)</div>
-                            <div className={s.price}>-${discardSum.toFixed(2)}</div>
+                            <div className={s.price}>-${discardSum.toFixed(1)}</div>
                         </div>
                         <div className={s.infoLine}>
                             <div className={s.sub}>Delivery Fee</div>
@@ -58,7 +65,7 @@ const Cart = () => {
                             <input placeholder={'Add promo code'}/>
                             <BlackButton text={'Apply'} width={119} height={48}/>
                         </div>
-                        <BlackButton text={'Go to Checkout'} width={457} fz={16}/>
+                        <BlackButton onClick={() => navigate('/create-order')}  text={'Go to Checkout'} width={457} fz={16}/>
                     </div>
                 </div>
             </> : <div className={s.cartNobody}>

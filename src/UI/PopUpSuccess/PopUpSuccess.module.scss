@@ -35,7 +35,7 @@
 }
 
 .popupHeader {
-  background-color: #4CAF50; /* Зеленый для успеха */
+  background-color: black; /* Зеленый для успеха */
   color: white;
   padding: 15px 20px;
   display: flex;
@@ -49,6 +49,7 @@
   margin: 0;
   font-size: 1.2em;
   font-weight: bold;
+  color: white;
 }
 
 .popupCloseButton {
@@ -87,7 +88,7 @@
 }
 
 .popupOkButton {
-  background-color: #4CAF50;
+  background-color: black;
   color: white;
   border: none;
   padding: 10px 20px;

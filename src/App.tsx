@@ -19,14 +19,15 @@ import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword.tsx";
 import ResetPasswordPage from "./Pages/ResetPasswordPage/ResetPasswordPage.tsx";
 import ProfileInfo from "./Pages/Profile/Components/ProfileInfo/ProfileInfo.tsx";
 import UserSessions from "./Pages/Profile/Components/UserSessions/UserSessions.tsx";
+import CreateOrderPage from "./Pages/CreateOrderPage/CreateOrderPage.tsx";
 
 function App() {
     const dispatch = useAppDispatch();
     const userId = useAppSelector(state => state.auth.id);
     useEffect(() => {
-        dispatch(fetchCurrentUser())
         if (localStorage.getItem('access_token')) {
             dispatch(refreshTokenAuth())
+            dispatch(fetchCurrentUser())
         }
     }, [localStorage.getItem('access_token')]);
 
@@ -44,15 +45,17 @@ function App() {
                 <Route path={'product/:id?'} element={<ProductPage/>}/>
                 <Route path={'catalog/'} element={<Catalog/>}/>
                 <Route path={'cart/'} element={<PrivateRoute><Cart/></PrivateRoute>}/>
+                <Route path={'create-order/'} element={<CreateOrderPage/>}/>
                 <Route path={'profile/'} element={<PrivateRoute><Profile/></PrivateRoute>}>
                     <Route index={true} element={<ProfileInfo/>}/>
                     <Route path={'sessions'} element={<UserSessions/>}/>
-                    <Route path={'orders'} element={<>заказы</>}/>
+
                 </Route>
                 <Route path={'login/'} element={<LoginPage/>}/>
                 <Route path={'register/'} element={<RegisterPage/>}/>
                 <Route path={'forgot/'} element={<ForgotPassword/>}/>
                 <Route path={'reset/'} element={<ResetPasswordPage/>}/>
+
             </Routes>
             <SubscribeNews/>
             <Footer/>

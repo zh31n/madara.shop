@@ -5,15 +5,16 @@ interface CartCounterProps {
     count: number;
     increment: () => void;
     decrement: () => void;
+    hideCount?: boolean;
 }
 
 
-const CartCounter = ({count,decrement,increment}:CartCounterProps) => {
+const CartCounter = ({count, decrement, increment, hideCount}: CartCounterProps) => {
     return (
         <div className={s.counter}>
-            <button onClick={decrement}>-</button>
+            {hideCount ? '' : <button onClick={decrement}>-</button>}
             <div className={s.count}> {count} </div>
-            <button onClick={increment}>+</button>
+            {hideCount ? '' : <button onClick={increment}>+</button>}
         </div>
     );
 };

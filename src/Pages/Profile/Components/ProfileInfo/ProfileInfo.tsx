@@ -1,7 +1,7 @@
 import s from "../../Profile.module.scss";
 import WhiteInput from "../../../../UI/WhiteInput/WhiteInput.tsx";
 import BlackButton from "../../../../UI/BlackButton/BlackButton.tsx";
-import PopUpSuccess from "../../../../UI/PopUpSuccess/PopUpSuccess.tsx";
+import PopUpSuccess from "../../../../UI/PopUpSuccess/PopUpSuccess";
 import PopUpConfirmCode from "../../../../UI/PopUpConfirmCode/PopUpConfirmCode.tsx";
 import {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../../Redux/store.ts";

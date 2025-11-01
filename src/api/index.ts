@@ -1,5 +1,5 @@
 import axios from "axios";
-import {feedbackItemDbI, newArrivalsI} from "../types/thunks.ts";
+import {feedbackItemDbI, newArrivalsI, orderItemOutI} from "../types/thunks.ts";
 import {fetchCurrentUser, LoginI} from "../Redux/thunkCreators/authorization.ts";
 import {useAppDispatch} from "../Redux/store.ts";
 
@@ -135,6 +135,11 @@ export const cartPageApi = {
         return await instance.post(`cart/update-count`, {userId, productId, count}).then(res => {
             return res.data;
         })
+    },
+    async clearCart(userId: number) {
+        return await instance.post(`cart/clear`, {userId: userId}).then(res => {
+            return res.data;
+        })
     }
 }
 
@@ -190,6 +195,14 @@ export const UsersSessionsApi = {
     async getUserSessions(id: number) {
         return await instance.get(`sessions/${id}`).then(res => {
             return res.data;
+        })
+    }
+}
+
+export const CreateOrderApi = {
+    async createOrder(orderData: orderItemOutI) {
+        return await instance.post('orders/create', orderData).then(res => {
+            return res.status;
         })
     }
 }
